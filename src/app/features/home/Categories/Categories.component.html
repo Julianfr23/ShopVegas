@@ -1,0 +1,16 @@
+<section class="categories-collage">
+  <h2>Explora nuestras categorías</h2>
+  <p>Descubre todos los productos que puedes personalizar con tu estilo único.</p>
+
+  <div class="collage-grid">
+    <a *ngFor="let c of items; let i = index"
+       class="cat-card collage-item collage-item-{{ i + 1 }}"
+       [routerLink]="c.link"
+       [title]="c.name">
+      <img [src]="c.imageUrl" [alt]="c.name">
+      <span class="name">{{ c.name }}</span>
+    </a>
+  </div>
+
+  <a routerLink="/catalog" class="more-btn">Ver más categorías</a>
+</section>

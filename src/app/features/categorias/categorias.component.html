@@ -1,0 +1,97 @@
+<app-header></app-header>
+
+<section class="categories-section" [class.visible]="categories.length > 0">
+  <div class="background-elements">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+  </div>
+
+  <h2 class="section-title">
+    Descubre Nuestras <span>Colecciones</span>
+  </h2>
+  <p class="section-subtitle">Desliza para explorar nuestras categorías premium</p>
+
+  <div class="carousel-container">
+    <button class="nav prev" (click)="prevSlide()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M15 18L9 12L15 6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <div class="carousel">
+      <div
+        *ngFor="let category of categories; let i = index"
+        class="card"
+        [class.active]="i === activeIndex"
+        [class.left]="i === activeIndex - 1"
+        [class.right]="i === activeIndex + 1"
+        [style.transform]="getCardTransform(i)"
+        (click)="selectCard(i)"
+      >
+        <div class="card-glow"></div>
+        <div class="card-content">
+          <div class="image-container">
+            <img
+              [src]="category.image"
+              [alt]="category.name"
+              class="category-image"
+            />
+            <div class="image-overlay"></div>
+            <div class="icon-wrap">
+              <i [class]="category.icon"></i>
+            </div>
+          </div>
+
+          <div class="text-content">
+            <h3 class="category-name">{{ category.name }}</h3>
+            <p class="category-description">{{ category.description }}</p>
+            <div class="category-stats">
+              <span class="stat">+50 productos</span>
+              <span class="stat">⭐ 4.8</span>
+            </div>
+
+            <!-- 🔥 Botón añadido para ir a la lista de productos -->
+            <button
+              class="btn-view-products"
+              (click)="verProductosPorCategoria(category.name); $event.stopPropagation()"
+            >
+              Ver productos
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="nav next" (click)="nextSlide()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M9 18L15 12L9 6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <div class="carousel-indicators">
+    <div
+      *ngFor="let category of categories; let i = index"
+      class="indicator"
+      [class.active]="i === activeIndex"
+      (click)="goToSlide(i)"
+    >
+      <span class="indicator-text">{{ category.name }}</span>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

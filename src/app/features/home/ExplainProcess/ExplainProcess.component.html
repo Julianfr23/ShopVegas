@@ -1,0 +1,41 @@
+<section class="process container" id="asi trabajamos">
+
+  <div class="title-wrapper">
+    <h2 class="big-title">Así trabajamos</h2>
+    <div class="curved-line" aria-hidden="true"></div>
+  </div>
+
+  <div class="steps-wrap">
+    <div class="step"
+      *ngFor="let s of steps; let i = index"
+      [style.--i]="i">
+
+      <div class="media-box">
+        <!--
+          Nota: usamos binding [src] directamente en el elemento video para mayor robustez en Angular.
+          autoplay + muted + playsinline permiten autoplay en mobile/desktop.
+          preload="auto" ayuda a que el navegador cargue el video (si quieres ahorrar ancho, usa "metadata").
+        -->
+        <video
+          [src]="s.media"
+          autoplay
+          muted
+          playsinline
+          loop
+          preload="auto"
+          class="step-video"
+        ></video>
+
+        <!-- Para depuración temporalmente activa controles:
+             <video [src]="s.media" controls muted preload="metadata"></video>
+             Quita controls para producción.
+        -->
+      </div>
+
+      <h3 class="step-title">{{ s.title }}</h3>
+      <p class="step-text">{{ s.text }}</p>
+
+    </div>
+  </div>
+
+</section>

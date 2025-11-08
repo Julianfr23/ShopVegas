@@ -1,0 +1,153 @@
+.product-detail-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem 5%;
+  background: #fafafa;
+  color: #222;
+  justify-content: center;
+}
+
+.image-section {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-image {
+  width: 100%;
+  max-width: 450px;
+  height: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.main-image img:hover {
+  transform: scale(1.05);
+}
+
+.thumbnail-gallery {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.thumbnail-gallery img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  cursor: pointer;
+  object-fit: cover;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.thumbnail-gallery img:hover {
+  transform: scale(1.05);
+}
+
+.thumbnail-gallery img.active {
+  border-color: #ff6699;
+  box-shadow: 0 0 10px rgba(255, 102, 153, 0.5);
+}
+
+.info-section {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  max-width: 500px;
+}
+
+.info-section h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.info-section .category {
+  color: #888;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.info-section .description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #e85d75;
+  margin-bottom: 2rem;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.btn-buy,
+.btn-custom {
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.btn-buy {
+  background: linear-gradient(90deg, #ff6699, #ff99cc);
+  color: white;
+}
+
+.btn-buy:hover {
+  opacity: 0.9;
+}
+
+.btn-custom {
+  background: transparent;
+  border: 2px solid #ff6699;
+  color: #ff6699;
+}
+
+.btn-custom:hover {
+  background: #ff6699;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .product-detail-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .info-section {
+    text-align: center;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+}

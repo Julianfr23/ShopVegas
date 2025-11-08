@@ -1,0 +1,28 @@
+<section class="sp-banner">
+  <!-- Elementos flotantes decorativos -->
+  <div class="floating-elements">
+    <div class="floating-element">★</div>
+    <div class="floating-element">❤</div>
+    <div class="floating-element">✦</div>
+  </div>
+
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-12 col-lg-7">
+        <div class="banner-content">
+          <h2 class="title">{{ banner.title }}</h2>
+          <p class="sub">{{ banner.subtitle }}</p>
+          <a *ngIf="banner.cta" class="btn btn-cta" [routerLink]="banner.cta.link">
+            {{ banner.cta.label }}
+          </a>
+        </div>
+      </div>
+      <div class="col-12 col-lg-5" *ngIf="banner.imageUrl">
+        <div class="banner-image">
+          <div class="holographic-effect"></div>
+          <img [src]="banner.imageUrl" alt="Inspiración de personalización" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

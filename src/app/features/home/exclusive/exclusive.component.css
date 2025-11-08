@@ -1,0 +1,373 @@
+/* === Sección principal - MEJORADA === */
+.exclusive-section {
+  background:
+    radial-gradient(circle at 20% 80%, rgba(161, 195, 164, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(246, 244, 219, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(246, 244, 219, 0.9) 0%, rgba(255, 255, 255, 0.4) 100%);
+  backdrop-filter: blur(20px);
+  padding: 120px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Múltiples elementos de brillo animados */
+.exclusive-section::before,
+.exclusive-section::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  animation: floatGlow 8s ease-in-out infinite;
+}
+
+.exclusive-section::before {
+  top: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(161, 195, 164, 0.4), transparent 70%);
+  animation-delay: 0s;
+}
+
+.exclusive-section::after {
+  bottom: -80px;
+  right: -80px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(246, 244, 219, 0.3), transparent 70%);
+  animation-delay: -4s;
+}
+
+@keyframes floatGlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.1);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(-20px, 15px) scale(0.9);
+    opacity: 0.4;
+  }
+}
+
+/* === Título - MEJORADO === */
+.exclusive-title {
+  font-size: 3rem;
+  color: #0f172a;
+  font-weight: 800;
+  margin-bottom: 70px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  letter-spacing: -0.5px;
+}
+
+.exclusive-title::after {
+  content: "";
+  width: 100px;
+  height: 5px;
+  background: linear-gradient(90deg, #a1c3a4, #89b296);
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(161, 195, 164, 0.3);
+}
+
+/* === Grid de productos - OPTIMIZADO === */
+.exclusive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 60px;
+  justify-items: center;
+  z-index: 1;
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* === Tarjetas - MEJORADAS === */
+.exclusive-card {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  max-width: 360px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.exclusive-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Efecto brillo al hover - MEJORADO */
+.exclusive-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%);
+  transform: skewX(-25deg);
+  transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 2;
+}
+
+.exclusive-card:hover::before {
+  left: 150%;
+}
+
+/* Imagen - MEJORADA */
+.exclusive-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.exclusive-image img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  transition: transform 0.6s ease;
+}
+
+.exclusive-card:hover .exclusive-image img {
+  transform: scale(1.08);
+}
+
+/* Overlay de imagen */
+.exclusive-image::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.exclusive-card:hover .exclusive-image::after {
+  opacity: 1;
+}
+
+/* Información - MEJORADA */
+.exclusive-info {
+  padding: 28px;
+  color: #0f172a;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.exclusive-info h3 {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+}
+
+.exclusive-info p {
+  font-size: 1.05rem;
+  color: #444;
+  opacity: 0.9;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.price {
+  display: block;
+  color: #a1c3a4;
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-bottom: 22px;
+  text-shadow: 0 2px 4px rgba(161, 195, 164, 0.2);
+  position: relative;
+}
+
+.price::before {
+  content: "💰";
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+/* Botón - MEJORADO */
+.exclusive-btn {
+  background: linear-gradient(135deg, #a1c3a4, #89b296);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 6px 20px rgba(161, 195, 164, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.exclusive-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent);
+  transition: left 0.6s ease;
+}
+
+.exclusive-btn:hover {
+  background: linear-gradient(135deg, #89b296, #a1c3a4);
+  box-shadow:
+    0 10px 30px rgba(161, 195, 164, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-4px) scale(1.05);
+}
+
+.exclusive-btn:hover::before {
+  left: 100%;
+}
+
+.exclusive-btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* === Animaciones mejoradas === */
+.exclusive-card {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: cardEntrance 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes cardEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Retraso escalonado para las tarjetas */
+.exclusive-card:nth-child(1) { animation-delay: 0.1s; }
+.exclusive-card:nth-child(2) { animation-delay: 0.2s; }
+.exclusive-card:nth-child(3) { animation-delay: 0.3s; }
+.exclusive-card:nth-child(4) { animation-delay: 0.4s; }
+.exclusive-card:nth-child(5) { animation-delay: 0.5s; }
+.exclusive-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* === Responsive - MEJORADO === */
+@media (max-width: 1200px) {
+  .exclusive-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .exclusive-section {
+    padding: 80px 20px;
+    backdrop-filter: blur(15px);
+  }
+
+  .exclusive-title {
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+  }
+
+  .exclusive-title::after {
+    width: 80px;
+    height: 4px;
+    bottom: -15px;
+  }
+
+  .exclusive-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 400px;
+  }
+
+  .exclusive-card {
+    max-width: 100%;
+  }
+
+  .exclusive-info h3 {
+    font-size: 1.4rem;
+  }
+
+  .exclusive-info p {
+    font-size: 1rem;
+  }
+
+  .price {
+    font-size: 1.3rem;
+  }
+
+  .exclusive-btn {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .exclusive-section {
+    padding: 60px 15px;
+  }
+
+  .exclusive-title {
+    font-size: 1.8rem;
+  }
+
+  .exclusive-info {
+    padding: 20px;
+  }
+
+  .exclusive-info h3 {
+    font-size: 1.3rem;
+  }
+
+  .exclusive-image img {
+    height: 220px;
+  }
+}
+
+/* Efecto de partículas sutiles */
+.exclusive-section::selection {
+  background: rgba(161, 195, 164, 0.3);
+}
+
+/* Mejora de rendimiento */
+.exclusive-card {
+  will-change: transform, box-shadow;
+}
+
+.exclusive-btn {
+  will-change: transform, box-shadow;
+}

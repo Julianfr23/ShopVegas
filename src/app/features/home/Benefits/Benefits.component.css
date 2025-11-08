@@ -1,0 +1,245 @@
+/* === SECCIÓN BENEFICIOS - LETRAS MÁS GRANDES Y VIVAS === */
+.benefits-section {
+  background: transparent;
+  padding: 6rem 0 4rem 0;
+}
+
+.section-title {
+  font-size: 3rem; /* Más grande */
+  font-weight: 900;
+  color: #1A1A1A;
+  margin-bottom: 0.8rem; /* Más espacio */
+  font-family: 'Merriweather', serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Más impacto */
+}
+
+.section-subtitle {
+  font-size: 1.3rem; /* Más grande */
+  color: #1A1A1A;
+  margin-bottom: 4rem;
+  font-family: 'Telegraf', sans-serif;
+  font-weight: 600; /* Más negrita */
+  opacity: 0.95; /* Menos opaco, más vivo */
+}
+
+/* === CARTAS SIMPLES CON EFECTO SUAVE === */
+.benefits-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.benefit-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem 2.5rem; /* Más padding */
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(255, 166, 171, 0.1);
+  border: 1px solid rgba(255, 166, 171, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de borde naranja al hover */
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px; /* Más grueso */
+  background: #FF7F0F;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover::before {
+  transform: scaleX(1);
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px); /* Más movimiento */
+  box-shadow: 0 20px 40px rgba(255, 166, 171, 0.25);
+}
+
+/* === ICONOS === */
+.icon-wrap {
+  width: 90px; /* Más grande */
+  height: 90px;
+  background: linear-gradient(135deg, #FFA6AB, #FF8A90);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem; /* Más grande */
+  margin: 0 auto 2rem auto; /* Más espacio */
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(255, 166, 171, 0.3);
+}
+
+/* Punto naranja sutil en el icono */
+.icon-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 16px; /* Más grande */
+  height: 16px;
+  background: #FF7F0F;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover .icon-wrap {
+  transform: scale(1.15); /* Más escala */
+}
+
+.benefit-card:hover .icon-wrap::after {
+  transform: scale(1.2);
+  background: #FF7F0F;
+}
+
+/* === TÍTULOS Y TEXTO MÁS GRANDES Y VIVOS === */
+.benefit-title {
+  font-weight: 900; /* Más negrita */
+  font-size: 1.6rem; /* Más grande */
+  font-family: 'Merriweather', serif;
+  color: #1A1A1A;
+  margin-bottom: 1.2rem; /* Más espacio */
+  position: relative;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Línea decorativa naranja bajo el título */
+.benefit-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px; /* Más ancha */
+  height: 3px; /* Más gruesa */
+  background: #FF7F0F;
+  transition: width 0.3s ease;
+}
+
+.benefit-card:hover .benefit-title::after {
+  width: 80px; /* Más expansión */
+}
+
+.benefit-text {
+  font-size: 1.1rem; /* Más grande */
+  line-height: 1.7; /* Mejor interlineado */
+  font-family: 'Telegraf', sans-serif;
+  font-weight: 600; /* Más negrita */
+  color: #1A1A1A;
+  opacity: 0.95; /* Más vivo */
+}
+
+/* === BADGE NARANJA MÁS GRANDE === */
+.benefit-badge {
+  display: inline-block;
+  margin-top: 1.5rem; /* Más espacio */
+  padding: 0.5rem 1.2rem; /* Más grande */
+  background: rgba(255, 127, 15, 0.15); /* Más visible */
+  color: #FF7F0F;
+  border-radius: 15px; /* Más redondeado */
+  font-size: 0.9rem; /* Más grande */
+  font-weight: 700; /* Más negrita */
+  font-family: 'Telegraf', sans-serif;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 127, 15, 0.2);
+}
+
+.benefit-card:hover .benefit-badge {
+  background: rgba(255, 127, 15, 0.25);
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(255, 127, 15, 0.2);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 991px) {
+  .benefits-section {
+    padding: 5rem 0 3rem 0;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .benefit-card {
+    padding: 2.5rem 2rem;
+  }
+
+  .icon-wrap {
+    width: 80px;
+    height: 80px;
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .benefits-container {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+    margin: 0 auto;
+    gap: 1.8rem;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .benefits-section {
+    padding: 4rem 0 2rem 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .benefit-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .icon-wrap {
+    width: 75px;
+    height: 75px;
+    font-size: 2rem;
+  }
+
+  .icon-wrap::after {
+    width: 14px;
+    height: 14px;
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .benefit-title {
+    font-size: 1.4rem;
+  }
+
+  .benefit-text {
+    font-size: 1.05rem;
+  }
+
+  .benefit-badge {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+}

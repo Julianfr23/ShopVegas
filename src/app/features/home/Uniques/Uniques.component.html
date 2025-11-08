@@ -1,0 +1,11 @@
+<section class="uniques-section container">
+  <div class="row g-4">
+    <div class="col-12 col-md-4" *ngFor="let u of items; let i = index">
+      <article class="unique-item" [style.--i]="i">
+        <i class="bi icon" [ngClass]="u.icon"></i>
+        <h3>{{ u.title }}</h3>
+        <p>{{ u.text }}</p>
+      </article>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,246 @@
+<div class="soulprint-innovative">
+  <!-- Efectos de fondo dinámicos -->
+  <div class="dynamic-background">
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+    <div class="energy-wave"></div>
+  </div>
+
+  <div class="login-layout">
+    <!-- Sección de marca creativa -->
+    <div class="creative-brand">
+      <div class="brand-experience">
+        <!-- Logo animado CON IMAGEN -->
+        <div class="animated-logo">
+          <div class="logo-aura"></div>
+          <div class="logo-core">
+            <div class="logo-sparkle"></div>
+            <div class="logo-image">
+              <!-- REEMPLAZA ESTA RUTA CON LA DE TU LOGO -->
+              <img src="assets/images/logo.png" alt="Soulprint Logo">
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenido de marca ACTUALIZADO -->
+        <div class="brand-magic">
+          <h1 class="magic-title">
+            <span class="title-gradient">Crea</span>
+            <span class="title-outline">tu cuenta</span>
+          </h1>
+          <div class="title-underline">
+            <div class="underline-glow"></div>
+          </div>
+          <p class="magic-subtitle">
+            Únete a nuestra comunidad<br>y da vida a tus ideas más creativas
+          </p>
+        </div>
+
+        <!-- Elementos interactivos ACTUALIZADOS -->
+        <div class="interactive-elements">
+          <div class="creative-dots">
+            <div class="dot dot-1" style="background: #FFA6AB;"></div>
+            <div class="dot dot-2" style="background: #FF8A90;"></div>
+            <div class="dot dot-3" style="background: #D6B6C4;"></div>
+            <div class="dot dot-4" style="background: #FF7F0F;"></div>
+          </div>
+          <div class="floating-text">
+            <span class="floating-word">Inspiración</span>
+            <span class="floating-word">Creatividad</span>
+            <span class="floating-word">Innovación</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de formulario de registro -->
+    <div class="futuristic-form">
+      <div class="form-portal">
+        <!-- Efecto de portal -->
+        <div class="portal-glow"></div>
+
+        <div class="form-content">
+          <!-- Header del formulario ACTUALIZADO -->
+          <div class="form-header-modern">
+            <h2 class="modern-title">Comienza tu Viaje</h2>
+            <p class="modern-subtitle">Donde la creatividad se encuentra con la innovación</p>
+            <div class="header-pulse"></div>
+          </div>
+
+          <form class="innovative-form" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+            <!-- Campo de nombre completo -->
+            <div class="input-modern">
+              <div class="input-orb"></div>
+              <input
+                type="text"
+                class="modern-input"
+                [(ngModel)]="userData.fullName"
+                name="fullName"
+                placeholder=" "
+                required
+                minlength="2">
+              <label class="modern-label">
+                <span class="label-glow">👤</span>
+                Nombre completo
+              </label>
+              <div class="input-trail"></div>
+            </div>
+
+            <!-- Campo de email -->
+            <div class="input-modern">
+              <div class="input-orb"></div>
+              <input
+                type="email"
+                class="modern-input"
+                [(ngModel)]="userData.email"
+                name="email"
+                placeholder=" "
+                required
+                email>
+              <label class="modern-label">
+                <span class="label-glow">✉</span>
+                Correo electrónico
+              </label>
+              <div class="input-trail"></div>
+            </div>
+
+            <!-- Campo de teléfono -->
+            <div class="input-modern">
+              <div class="input-orb"></div>
+              <input
+                type="tel"
+                class="modern-input"
+                [(ngModel)]="userData.phone"
+                name="phone"
+                placeholder=" "
+                required>
+              <label class="modern-label">
+                <span class="label-glow">📱</span>
+                Teléfono
+              </label>
+              <div class="input-trail"></div>
+            </div>
+
+            <!-- Campo de contraseña -->
+            <div class="input-modern">
+              <div class="input-orb"></div>
+              <input
+                type="password"
+                class="modern-input"
+                [(ngModel)]="userData.password"
+                name="password"
+                placeholder=" "
+                required
+                minlength="6">
+              <label class="modern-label">
+                <span class="label-glow">🔒</span>
+                Contraseña
+              </label>
+              <div class="input-trail"></div>
+            </div>
+
+            <!-- Campo de confirmar contraseña -->
+            <div class="input-modern">
+              <div class="input-orb"></div>
+              <input
+                type="password"
+                class="modern-input"
+                [(ngModel)]="userData.confirmPassword"
+                name="confirmPassword"
+                placeholder=" "
+                required>
+              <label class="modern-label">
+                <span class="label-glow">✅</span>
+                Confirmar contraseña
+              </label>
+              <div class="input-trail"></div>
+            </div>
+
+            <!-- Términos y condiciones -->
+            <div class="modern-options">
+              <label class="future-checkbox">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="userData.acceptTerms"
+                  name="acceptTerms"
+                  required>
+                <span class="check-future">
+                  <span class="check-energy"></span>
+                </span>
+                <span class="check-label">Acepto los términos y condiciones</span>
+              </label>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="modern-options">
+              <label class="future-checkbox">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="userData.newsletter"
+                  name="newsletter">
+                <span class="check-future">
+                  <span class="check-energy"></span>
+                </span>
+                <span class="check-label">Recibir newsletter creativo</span>
+              </label>
+            </div>
+
+            <!-- Botón de registro -->
+            <button
+              type="submit"
+              class="future-btn"
+              [disabled]="!registerForm.valid || !passwordsMatch()">
+              <span class="btn-aura"></span>
+              <span class="btn-content">
+                <span class="btn-spark">🚀</span>
+                <span class="btn-text">Crear Mi Cuenta</span>
+                <span class="btn-arrow">➜</span>
+              </span>
+              <div class="btn-energy"></div>
+            </button>
+
+            <!-- Mensaje de error de contraseña -->
+            <div *ngIf="userData.password && userData.confirmPassword && !passwordsMatch()"
+                 class="error-message">
+              ⚠ Las contraseñas no coinciden
+            </div>
+          </form>
+
+          <!-- Separador energético -->
+          <div class="energy-divider">
+            <div class="energy-node"></div>
+            <span class="divider-pulse">¿Ya tienes cuenta?</span>
+            <div class="energy-node"></div>
+          </div>
+
+          <!-- Botón para ir a login -->
+          <button class="future-register" (click)="goToLogin()">
+            <span class="register-glow"></span>
+            <span class="register-content">
+              <span class="register-plus">←</span>
+              <span class="register-text">Volver al Login</span>
+            </span>
+          </button>
+
+          <!-- Mensaje inspirador ACTUALIZADO -->
+          <div class="inspiration-modern">
+            <div class="quote-marks">"</div>
+            <p>Tu esencia creativa merece el mejor escenario</p>
+            <div class="quote-marks">"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partículas flotantes -->
+  <div class="floating-particles">
+    <div class="particle" *ngFor="let particle of particles"
+         [style.left]="particle.x + '%'"
+         [style.top]="particle.y + '%'"
+         [style.animation-delay]="particle.delay + 's'"
+         [style.background]="particle.color">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<section class="products-section">
+  <h2 class="section-title">Productos <span>Destacados</span></h2>
+
+  <!-- Barra de búsqueda -->
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="🔍 Buscar producto..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+    />
+  </div>
+
+  <div class="product-grid">
+    <div *ngFor="let product of filteredProducts" class="product-card">
+      <div class="image-wrap">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+      <div class="product-info">
+        <h3>{{ product.name }}</h3>
+        <p class="price">${{ product.price | number }}</p>
+        <div class="buttons">
+          <a [routerLink]="['/productos/view', product.id]" class="btn-view">Ver Detalles</a>
+          <a
+            href="https://wa.me/573001234567?text=Hola%20quiero%20comprar%20{{ product.name }}"
+            target="_blank"
+            class="btn-buy"
+            >Personalizar</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <div *ngIf="filteredProducts.length === 0" class="no-results">
+      <p>No se encontraron productos para "<strong>{{ searchTerm }}</strong>"</p>
+    </div>
+  </div>
+</section>

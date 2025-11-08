@@ -1,0 +1,21 @@
+<section class="exclusive-section">
+  <h2 class="exclusive-title">✨ Exclusivos del Mes</h2>
+
+  <div class="exclusive-grid">
+    <div
+      class="exclusive-card fade-in"
+      *ngFor="let product of exclusiveProducts; let i = index"
+      [style.animation-delay]="i * 0.2 + 's'"
+    >
+      <div class="exclusive-image">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+      <div class="exclusive-info">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <span class="price">${{ product.price | number }}</span>
+        <button class="exclusive-btn">Ver más</button>
+      </div>
+    </div>
+  </div>
+</section>

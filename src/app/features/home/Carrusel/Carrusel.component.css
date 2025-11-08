@@ -1,0 +1,164 @@
+/* === CARRUSEL SOULPRINT — Versión A con flechas refinadas === */
+/* SOLO CAMBIOS DE COLOR PARA CONGRUENCIA */
+
+/* Imagen principal */
+.hero-img {
+  aspect-ratio: 16 / 6;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(85%) saturate(1.05);
+  transition: transform 1.2s ease, filter 0.6s ease;
+}
+
+.carousel-item.active .hero-img {
+  transform: scale(1.05);
+  filter: brightness(95%);
+}
+
+/* === CAPTION CON GRADIENTE DETRÁS DEL TEXTO === */
+.hero-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 2;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.hero-caption::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.05));
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.hero-caption * {
+  position: relative;
+  z-index: 2;
+}
+
+/* === TEXTO === */
+.caption-title {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 0.5rem;
+}
+
+.caption-sub {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  margin-bottom: 1.2rem;
+}
+
+/* === BOTÓN CTA === */
+.btn-cta {
+  background: linear-gradient(135deg, #FFA6AB, #FF8A90); /* Rosa */
+  border: none;
+  color: #FFF;
+  font-weight: 600;
+  padding: 0.65rem 1.8rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(255, 166, 171, 0.35);
+}
+
+.btn-cta:hover {
+  background: linear-gradient(135deg, #FF8A90, #FF6F76); /* Rosa más intenso */
+  color: #FFF; /* Mantener texto blanco */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255, 166, 171, 0.5);
+}
+
+/* === INDICADORES === */
+.carousel-indicators [data-bs-target] {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.carousel-indicators .active {
+  background-color: #FFA6AB; /* ROSA en lugar de naranja */
+  transform: scale(1.3);
+}
+
+/* === NUEVAS FLECHAS GLASS === */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 48px;
+  height: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-50%) scale(1.08);
+}
+
+/* Íconos blancos suaves */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background: none;
+  width: 16px;
+  height: 16px;
+  border-top: 3px solid rgba(255, 255, 255, 0.9);
+  border-right: 3px solid rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  opacity: 0.9;
+}
+
+/* Flecha izquierda */
+.carousel-control-prev-icon {
+  transform: rotate(225deg);
+}
+
+/* Flecha derecha */
+.carousel-control-next-icon {
+  transform: rotate(45deg);
+}
+
+/* Hover: brillo sutil blanco */
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+  border-color: #fff;
+  opacity: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 992px) {
+  .hero-img { aspect-ratio: 16 / 7.5; }
+}
+
+@media (max-width: 768px) {
+  .hero-img { aspect-ratio: 16 / 9; }
+  .caption-title { font-size: 1.7rem; }
+  .caption-sub { font-size: 1rem; }
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 42px;
+    height: 42px;
+  }
+}

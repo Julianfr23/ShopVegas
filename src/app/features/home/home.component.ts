@@ -9,14 +9,14 @@ import { ProductsFeaturedComponent } from './products-featured/products-featured
 import { TestimonialsComponent } from './Testimonials/Testimonials.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
-import { carruselComponent } from './Carrusel/Carrusel.component';
+import { CarruselComponent } from './Carrusel/Carrusel.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    carruselComponent,
+    CarruselComponent,
     HeroSplitComponent,
     BannerCtaComponent,
     CategoriesComponent,

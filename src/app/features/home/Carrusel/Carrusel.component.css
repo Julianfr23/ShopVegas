@@ -1,0 +1,80 @@
+/* carrusel.component.css */
+
+.sp-carrusel {
+  position: relative;
+  overflow: hidden;
+  background: var(--sp-cream);
+  padding: 3rem 0;
+}
+
+/* ── TICKER ── */
+.carrusel-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+}
+
+.carrusel-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: scrollLTR 50s linear infinite;
+}
+
+.carrusel-row:hover .carrusel-track {
+  animation-play-state: paused;
+}
+
+/* Cards sin bordes redondeados ni sombra — integradas al fondo */
+.carrusel-img-wrap {
+  flex-shrink: 0;
+  width: 380px;
+  height: 68vh;
+  min-height: 420px;
+  max-height: 680px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.carrusel-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.carrusel-img-wrap:hover img {
+  transform: scale(1.04);
+}
+
+@keyframes scrollLTR {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 1024px) {
+  .carrusel-img-wrap { width: 300px; }
+}
+
+@media (max-width: 768px) {
+  .sp-carrusel { padding: 2rem 0; }
+  .carrusel-img-wrap { width: 240px; height: 52vh; min-height: 300px; }
+}
+
+@media (max-width: 480px) {
+  .carrusel-img-wrap { width: 190px; height: 42vh; min-height: 240px; }
+}

@@ -1,0 +1,217 @@
+<!-- product-custom.component.html -->
+<div class="sp-custom-page">
+
+  <!-- Notification -->
+  <div class="sp-toast" [class.visible]="showNotification" [class.toast--error]="notificationType === 'error'">
+    <div class="toast-inner">
+      <i class="bi" [ngClass]="notificationType === 'error' ? 'bi-exclamation-circle-fill' : 'bi-check-circle-fill'"></i>
+      <span>{{ notificationMessage }}</span>
+    </div>
+  </div>
+
+  <!-- Success alert -->
+  <div class="sp-success-alert" [class.visible]="showSuccessAlert">
+    <div class="success-inner">
+      <i class="bi bi-bag-check-fill"></i>
+      <div>
+        <strong>Added to cart!</strong>
+        <span>{{ successMessage }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE HEADER ── -->
+  <div class="custom-header">
+    <div class="custom-header-inner">
+      <div>
+        <span class="custom-eyebrow">Custom Designer</span>
+        <h1 class="custom-title">Design your <em>own product</em></h1>
+      </div>
+      <a routerLink="/productos" class="back-link">
+        <i class="bi bi-arrow-left"></i> Back to products
+      </a>
+    </div>
+  </div>
+
+  <!-- ── MAIN LAYOUT ── -->
+  <div class="custom-body">
+
+    <!-- LEFT: Config panel -->
+    <aside class="custom-panel">
+
+      <!-- Product selector -->
+      <div class="panel-section">
+        <h4 class="panel-label">Product</h4>
+        <div class="product-pills">
+          <button
+            class="product-pill"
+            *ngFor="let p of products"
+            [class.active]="selectedProduct === p"
+            (click)="selectProduct(p)">
+            {{ p }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Measure selector -->
+      <div class="panel-section">
+        <h4 class="panel-label">Size / Variant</h4>
+        <div class="measure-pills">
+          <button
+            class="measure-pill"
+            *ngFor="let m of measuresFor[selectedProduct]"
+            [class.active]="selectedMeasure === m"
+            (click)="selectMeasure(m)">
+            {{ m }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="panel-section">
+        <h4 class="panel-label">Quantity</h4>
+        <div class="qty-control">
+          <button class="qty-btn" (click)="decreaseQuantity()" [disabled]="quantity <= 1">
+            <i class="bi bi-dash"></i>
+          </button>
+          <input
+            type="number"
+            class="qty-input"
+            [value]="quantity"
+            min="1" max="99"
+            (change)="onQuantityChange($event)">
+          <button class="qty-btn" (click)="increaseQuantity()" [disabled]="quantity >= 99">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Upload -->
+      <div class="panel-section">
+        <h4 class="panel-label">
+          Your Images
+          <span class="img-count">{{ images.length }}/10</span>
+        </h4>
+        <label class="upload-zone" [class.has-images]="images.length > 0">
+          <input type="file" accept="image/*" multiple (change)="onFiles($event)" hidden>
+          <i class="bi bi-cloud-upload"></i>
+          <span>Click to upload images</span>
+          <small>PNG, JPG, WebP up to 10MB</small>
+        </label>
+
+        <!-- Image list -->
+        <div class="img-list" *ngIf="images.length > 0">
+          <div
+            class="img-list-item"
+            *ngFor="let img of images; let i = index"
+            [class.selected]="selectedIndex === i"
+            (click)="selectImage(i)">
+            <img [src]="img.url" [alt]="img.fileName || 'Image ' + (i+1)">
+            <span>{{ img.fileName || 'Image ' + (i+1) }}</span>
+            <button class="img-remove" (click)="removeImage(i); $event.stopPropagation()">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+
+        <button class="remove-all-btn" *ngIf="images.length > 1" (click)="removeAll()">
+          <i class="bi bi-trash"></i> Remove all
+        </button>
+      </div>
+
+      <!-- Price breakdown -->
+      <div class="panel-price">
+        <div class="price-row">
+          <span>Base price ({{ selectedProduct }})</span>
+          <span>${{ calculateBasePrice() }}</span>
+        </div>
+        <div class="price-row" *ngIf="images.length > 0">
+          <span>Images ({{ images.length }} × ${{ IMAGE_COST }})</span>
+          <span>${{ calculateImageCost() }}</span>
+        </div>
+        <div class="price-row">
+          <span>Quantity × {{ quantity }}</span>
+          <span>${{ calculateTotalPrice() }}</span>
+        </div>
+        <div class="price-total">
+          <span>Total</span>
+          <strong>${{ calculateFinalPrice() }}</strong>
+        </div>
+      </div>
+
+      <!-- Buy button -->
+      <button
+        class="buy-btn"
+        (click)="buy()"
+        [disabled]="images.length === 0">
+        <i class="bi bi-bag-plus"></i>
+        {{ images.length === 0 ? 'Upload an image first' : 'Add to Cart' }}
+      </button>
+
+    </aside>
+
+    <!-- RIGHT: Canvas stage -->
+    <div class="custom-stage-wrap">
+      <div class="stage-label">
+        <i class="bi bi-pencil-square"></i>
+        Design canvas — drag, resize and rotate your images
+      </div>
+
+      <div
+        class="stage-box"
+        #stageBox
+        (click)="clearSelection()">
+
+        <!-- Empty state -->
+        <div class="stage-empty" *ngIf="images.length === 0">
+          <i class="bi bi-image"></i>
+          <p>Upload images to start designing</p>
+        </div>
+
+        <!-- Images on canvas -->
+        <div
+          class="stage-image-wrap"
+          *ngFor="let img of images; let i = index"
+          [class.selected]="selectedIndex === i"
+          [style.left.px]="img.x"
+          [style.top.px]="img.y"
+          [style.width.px]="img.width"
+          [style.height.px]="img.height"
+          [style.transform]="'rotate(' + img.rotation + 'deg)'"
+          (pointerdown)="startDrag($event, i)"
+          (click)="selectImage(i); $event.stopPropagation()">
+
+          <img [src]="img.url" draggable="false">
+
+          <!-- Controls when selected -->
+          <ng-container *ngIf="selectedIndex === i">
+            <!-- Resize handles -->
+            <div class="handle handle-tl" (pointerdown)="startResize($event, i, 'tl')"></div>
+            <div class="handle handle-tr" (pointerdown)="startResize($event, i, 'tr')"></div>
+            <div class="handle handle-bl" (pointerdown)="startResize($event, i, 'bl')"></div>
+            <div class="handle handle-br" (pointerdown)="startResize($event, i, 'br')"></div>
+            <div class="handle handle-t"  (pointerdown)="startResize($event, i, 'top')"></div>
+            <div class="handle handle-b"  (pointerdown)="startResize($event, i, 'bottom')"></div>
+            <div class="handle handle-l"  (pointerdown)="startResize($event, i, 'left')"></div>
+            <div class="handle handle-r"  (pointerdown)="startResize($event, i, 'right')"></div>
+            <!-- Rotate handle -->
+            <div class="handle handle-rotate" (pointerdown)="startRotate($event, i)">
+              <i class="bi bi-arrow-clockwise"></i>
+            </div>
+            <!-- Remove -->
+            <button class="stage-remove" (click)="removeImage(i); $event.stopPropagation()">
+              <i class="bi bi-x"></i>
+            </button>
+          </ng-container>
+        </div>
+
+      </div>
+
+      <p class="stage-hint">
+        <i class="bi bi-info-circle"></i>
+        Click an image to select it, then drag to move, use handles to resize or rotate.
+      </p>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,143 @@
+<!-- hero-split.component.html -->
+<section class="sp-hero">
+
+  <!-- ══ LADO GAMER ══ -->
+  <div class="hero-side hero-gamer"
+       [class.expanded]="activeTheme === 'gamer'"
+       [class.collapsed]="activeTheme === 'hogar'"
+       (click)="activeTheme === 'hogar' && selectTheme('gamer')">
+
+    <div class="hero-bg hero-bg--gamer">
+      <div class="gamer-grid"></div>
+      <div class="gamer-scanlines"></div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="hero-content hero-content--gamer">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span> Gamer World
+      </div>
+      <h1 class="hero-title hero-title--gamer">
+        Take your<br>
+        <em>identity</em><br>
+        to the next level
+      </h1>
+      <p class="hero-sub">
+        Epic mouse pads, custom hoodies<br>
+        and mugs that scream GG.
+      </p>
+
+      <button class="theme-btn theme-btn--gamer"
+              [class.active]="activeTheme === 'gamer'"
+              (click)="selectTheme('gamer'); $event.stopPropagation()">
+        <i class="bi bi-controller"></i>
+        <span>{{ activeTheme === 'gamer' ? 'Gamer Mode ON' : 'Switch to Gamer' }}</span>
+        <i class="bi bi-check-lg check-icon" *ngIf="activeTheme === 'gamer'"></i>
+      </button>
+
+      <a class="hero-cta hero-cta--gamer" routerLink="/productos"
+         (click)="$event.stopPropagation()">
+        <span>Explore Gamer</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Label visible cuando está colapsado -->
+    <div class="collapsed-label">
+      <i class="bi bi-controller"></i>
+      <span>Gamer</span>
+    </div>
+
+    <!-- Badge -->
+    <div class="hero-badge hero-badge--gamer">
+      <i class="bi bi-controller"></i>
+      <span>Gamer Edition</span>
+    </div>
+
+    <!-- Divisor -->
+    <div class="hero-divider">
+      <div class="divider-line"></div>
+      <div class="divider-orb">
+        <img src="assets/images/Soulprint_isotipo2.png" alt="SoulPrint">
+      </div>
+      <div class="divider-line"></div>
+    </div>
+
+  </div>
+
+  <!-- ══ LADO HOGAR ══ -->
+  <div class="hero-side hero-hogar"
+       [class.expanded]="activeTheme === 'hogar'"
+       [class.collapsed]="activeTheme === 'gamer'"
+       (click)="activeTheme === 'gamer' && selectTheme('hogar')">
+
+    <div class="hero-bg hero-bg--hogar">
+      <div class="hogar-dots"></div>
+      <div class="hogar-waves"></div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="hero-content hero-content--hogar">
+      <div class="hero-eyebrow hero-eyebrow--hogar">
+        <span class="eyebrow-dot eyebrow-dot--hogar"></span> Home & Office
+      </div>
+      <h1 class="hero-title hero-title--hogar">
+        Transform<br>
+        your space with<br>
+        <em>your essence</em>
+      </h1>
+      <p class="hero-sub hero-sub--hogar">
+        Blankets, mugs and desk pads that tell<br>
+        your story in every corner.
+      </p>
+
+      <button class="theme-btn theme-btn--hogar"
+              [class.active]="activeTheme === 'hogar'"
+              (click)="selectTheme('hogar'); $event.stopPropagation()">
+        <i class="bi bi-house-heart"></i>
+        <span>{{ activeTheme === 'hogar' ? 'Home Mode ON' : 'Switch to Home' }}</span>
+        <i class="bi bi-check-lg check-icon" *ngIf="activeTheme === 'hogar'"></i>
+      </button>
+
+      <a class="hero-cta hero-cta--hogar" routerLink="/productos"
+         (click)="$event.stopPropagation()">
+        <span>Explore Home</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Label visible cuando está colapsado -->
+    <div class="collapsed-label collapsed-label--hogar">
+      <i class="bi bi-house-heart"></i>
+      <span>Home</span>
+    </div>
+
+    <!-- Badge -->
+    <div class="hero-badge hero-badge--hogar">
+      <i class="bi bi-house-heart"></i>
+      <span>Home Edition</span>
+    </div>
+
+  </div>
+
+  <!-- Tabs móvil -->
+  <div class="hero-mobile-tabs">
+    <button class="mobile-tab"
+            [class.active]="activeTheme === 'gamer'"
+            (click)="selectTheme('gamer')">
+      <i class="bi bi-controller"></i> Gamer
+    </button>
+    <button class="mobile-tab"
+            [class.active]="activeTheme === 'hogar'"
+            (click)="selectTheme('hogar')">
+      <i class="bi bi-house-heart"></i> Home
+    </button>
+  </div>
+
+</section>

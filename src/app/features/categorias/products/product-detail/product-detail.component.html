@@ -1,0 +1,194 @@
+<!-- product-detail.component.html -->
+<div class="sp-product-detail" *ngIf="selectedProduct; else notFound">
+
+  <!-- Toast -->
+  <div class="sp-toast" [class.visible]="showNotification">
+    <div class="toast-inner">
+      <i class="bi bi-bag-check-fill"></i>
+      <div>
+        <strong>Added to cart!</strong>
+        <span>{{ selectedProduct.name }}</span>
+      </div>
+      <button (click)="closeNotification()"><i class="bi bi-x"></i></button>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="pd-breadcrumb">
+    <div class="pd-breadcrumb-inner">
+      <a routerLink="/home">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <a routerLink="/productos">Products</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>{{ selectedProduct.name }}</span>
+    </div>
+  </div>
+
+  <!-- ══ MAIN ══ -->
+  <div class="pd-main">
+
+    <!-- Imagen — clase según categoría -->
+    <div class="pd-images"
+         [class.pd-images--gamer]="selectedProduct.category === 'Gaming'">
+      <div class="pd-main-img">
+        <button class="pd-arrow pd-arrow--prev" (click)="prevImage()">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <img [src]="selectedImage" [alt]="selectedProduct.name">
+        <button class="pd-arrow pd-arrow--next" (click)="nextImage()">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+      <div class="pd-img-dots" *ngIf="allImages.length > 1">
+        <button
+          *ngFor="let img of allImages; let i = index"
+          class="pd-img-dot"
+          [class.active]="selectedImage === img"
+          (click)="selectImage(img)">
+        </button>
+      </div>
+    </div>
+
+    <!-- Info — clase según categoría -->
+    <div class="pd-info"
+         [class.pd-info--gamer]="selectedProduct.category === 'Gaming'">
+
+      <span class="pd-category">{{ selectedProduct.category }}</span>
+      <h1 class="pd-name">{{ selectedProduct.name }}</h1>
+
+      <div class="pd-price-wrap">
+        <span class="pd-price-label">desde</span>
+        <span class="pd-price">{{ displayedPrice | currency:'USD':'symbol':'1.2-2' }}</span>
+      </div>
+
+      <p class="pd-desc">{{ selectedProduct.description }}</p>
+
+      <!-- Variantes -->
+      <div class="pd-variants" *ngIf="hasProductVariants">
+        <label class="pd-field-label">Tamaño:</label>
+        <div class="pd-select-wrap">
+          <select class="pd-select" (change)="onSelectChange($event)">
+            <option value="" disabled selected>Selecciona Tamaño</option>
+            <option *ngFor="let v of selectedProduct.variants" [value]="v.price">
+              {{ v.label }} — {{ v.price | currency:'USD':'symbol':'1.2-2' }}
+            </option>
+          </select>
+          <i class="bi bi-chevron-down"></i>
+        </div>
+      </div>
+
+      <!-- Cantidad + CTA -->
+      <div class="pd-qty-row">
+        <div class="qty-control">
+          <button class="qty-btn" (click)="decreaseQuantity()" [disabled]="quantity <= 1">
+            <i class="bi bi-dash"></i>
+          </button>
+          <span class="qty-val">{{ quantity }}</span>
+          <button class="qty-btn" (click)="increaseQuantity()" [disabled]="quantity >= 99">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Botones acción -->
+      <div class="pd-actions-row">
+        <button
+          class="pd-btn-cart"
+          [class.pd-btn-cart--gamer]="selectedProduct.category === 'Gaming'"
+          (click)="addToCart()"
+          [disabled]="isAddingToCart">
+          <i class="bi" [ngClass]="isAddingToCart ? 'bi-hourglass-split' : 'bi-bag-plus'"></i>
+          {{ isAddingToCart ? 'Adding...' : 'Add to Cart' }}
+        </button>
+
+        <a class="pd-btn-customize" routerLink="/product/custom">
+          <i class="bi bi-palette2"></i>
+          Customize
+        </a>
+      </div>
+
+      <!-- Perks -->
+      <div class="pd-perks">
+        <div class="pd-perk"><i class="bi bi-truck"></i><span>Free shipping over $100</span></div>
+        <div class="pd-perk"><i class="bi bi-shield-check"></i><span>Secure payment</span></div>
+        <div class="pd-perk"><i class="bi bi-arrow-return-left"></i><span>Easy returns 30 days</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ ACORDEÓN ══ -->
+  <div class="pd-accordion"
+       [class.pd-accordion--gamer]="selectedProduct.category === 'Gaming'">
+
+    <div class="pd-acc-item" [class.open]="accOpen['features']">
+      <button class="pd-acc-header" (click)="toggleAcc('features')">
+        <span>Features</span>
+        <i class="bi" [ngClass]="accOpen['features'] ? 'bi-dash' : 'bi-plus'"></i>
+      </button>
+      <div class="pd-acc-body">
+        <ul class="pd-features-list">
+          <li *ngFor="let f of selectedProduct.features ?? defaultFeatures">
+            <strong>{{ f.title }}:</strong> {{ f.desc }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pd-acc-item" [class.open]="accOpen['care']">
+      <button class="pd-acc-header" (click)="toggleAcc('care')">
+        <span>Care Instructions</span>
+        <i class="bi" [ngClass]="accOpen['care'] ? 'bi-dash' : 'bi-plus'"></i>
+      </button>
+      <div class="pd-acc-body">
+        <ul class="pd-features-list">
+          <li *ngFor="let c of selectedProduct.care ?? defaultCare">{{ c }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pd-acc-item" [class.open]="accOpen['size']">
+      <button class="pd-acc-header" (click)="toggleAcc('size')">
+        <span>Size Guide</span>
+        <i class="bi" [ngClass]="accOpen['size'] ? 'bi-dash' : 'bi-plus'"></i>
+      </button>
+      <div class="pd-acc-body">
+        <div class="pd-size-table" *ngIf="selectedProduct.variants?.length">
+          <div class="pd-size-row pd-size-row--header">
+            <span>Size</span><span>Price</span>
+          </div>
+          <div class="pd-size-row" *ngFor="let v of selectedProduct.variants">
+            <span>{{ v.label }}</span>
+            <span>{{ v.price | currency:'USD':'symbol':'1.2-2' }}</span>
+          </div>
+        </div>
+        <p *ngIf="!selectedProduct.variants?.length" class="pd-acc-text">
+          One size. Fully customizable dimensions upon request.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ INSPIRATE ══ -->
+  <div class="pd-inspirate"
+       [class.pd-inspirate--gamer]="selectedProduct.category === 'Gaming'"
+       *ngIf="selectedProduct.inspirate?.length">
+    <h3 class="pd-inspirate-title">INSPIRATE</h3>
+    <div class="pd-inspirate-grid">
+      <div class="pd-inspirate-card" *ngFor="let img of selectedProduct.inspirate">
+        <img [src]="img" alt="Design inspiration">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #notFound>
+  <div class="pd-not-found">
+    <i class="bi bi-emoji-frown"></i>
+    <h2>Product not found</h2>
+    <p>The product you're looking for doesn't exist or has been removed.</p>
+    <a routerLink="/productos" class="pd-back-btn">Back to products</a>
+  </div>
+</ng-template>

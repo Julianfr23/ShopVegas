@@ -1,0 +1,109 @@
+<!-- categorias.component.html -->
+<div class="sp-categorias-page">
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="cat-hero">
+    <div class="cat-hero-bg">
+      <div class="cat-hero-dots"></div>
+      <div class="cat-hero-blob cat-hero-blob--1"></div>
+      <div class="cat-hero-blob cat-hero-blob--2"></div>
+    </div>
+    <div class="cat-hero-inner">
+      <span class="hero-eyebrow">All Collections</span>
+      <h1 class="hero-title">
+        Everything you can<br>
+        <em>make your own</em>
+      </h1>
+      <p class="hero-sub">
+        From gaming setups to cozy homes — browse every category
+        and find the perfect canvas for your ideas.
+      </p>
+      <!-- Stat pills -->
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <strong>6</strong>
+          <span>Categories</span>
+        </div>
+        <div class="stat-pill">
+          <strong>50+</strong>
+          <span>Products</span>
+        </div>
+        <div class="stat-pill">
+          <strong>100%</strong>
+          <span>Customizable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       GRID DE CATEGORÍAS
+  ═══════════════════════════════════════ -->
+  <section class="cat-grid-section">
+
+    <div class="cat-grid">
+      <div
+        class="cat-card"
+        *ngFor="let c of categories; let i = index"
+        [style.animation-delay]="i * 0.08 + 's'"
+        [class.cat-card--active]="activeCategory === c.id"
+        (mouseenter)="activeCategory = c.id"
+        (mouseleave)="activeCategory = null">
+
+        <!-- Imagen -->
+        <div class="cat-card-img">
+          <img [src]="c.imageUrl" [alt]="c.name">
+          <div class="cat-card-overlay"></div>
+          <span class="cat-card-count">{{ c.count }} items</span>
+        </div>
+
+        <!-- Info -->
+        <div class="cat-card-info">
+          <div class="cat-card-header">
+            <div class="cat-card-icon">
+              <i class="bi" [ngClass]="c.icon"></i>
+            </div>
+            <div>
+              <h3 class="cat-card-name">{{ c.name }}</h3>
+              <span class="cat-card-tag">{{ c.tag }}</span>
+            </div>
+          </div>
+          <p class="cat-card-desc">{{ c.description }}</p>
+          <a
+            class="cat-card-cta"
+            routerLink="/productos"
+            [queryParams]="{categoria: c.id}">
+            Browse {{ c.name }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       BANNER CTA INFERIOR
+  ═══════════════════════════════════════ -->
+  <section class="cat-bottom-cta">
+    <div class="cat-bottom-cta-inner">
+      <div class="cat-bottom-icon">
+        <i class="bi bi-palette2"></i>
+      </div>
+      <div class="cat-bottom-text">
+        <h2>Don't see what you're looking for?</h2>
+        <p>Use our custom designer to create exactly what you have in mind.</p>
+      </div>
+      <a routerLink="/product/custom" class="cat-bottom-btn">
+        <i class="bi bi-stars"></i>
+        Start Designing
+      </a>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,70 @@
+<!-- header.component.html -->
+<header class="sp-header" [class.scrolled]="isScrolled">
+  <div class="container">
+
+    <!-- LOGO -->
+    <a class="sp-logo" routerLink="/">
+      <img src="assets/images/Soulprint_isotipo.png" alt="SoulPrint isotipo">
+      <div class="sp-logo-text">
+        <span class="wordmark"><span>Soul</span>Print</span>
+        <span class="tagline">Custom Sublimation</span>
+      </div>
+    </a>
+
+    <!-- NAV (desktop) -->
+    <ul class="sp-nav">
+      <li><a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li><a class="nav-link" routerLink="/categorias" routerLinkActive="active">Categories</a></li>
+      <li><a class="nav-link" routerLink="/productos" routerLinkActive="active">Products</a></li>
+
+    </ul>
+
+    <!-- BUSCADOR (desktop) -->
+    <div class="sp-search">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" placeholder="Buscar productos..." [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
+    </div>
+
+    <!-- ACCIONES (desktop) -->
+    <div class="sp-actions">
+      <a class="sp-btn-outline" routerLink="/auth/login">
+        <i class="bi bi-person"></i> Login
+      </a>
+      <a class="sp-btn-primary" routerLink="/auth/register">
+        <i class="bi bi-person-plus"></i> Register
+      </a>
+      <a class="sp-cart-btn" routerLink="/buy">
+        <i class="bi bi-basket2"></i>
+        <span class="sp-cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </a>
+    </div>
+
+    <!-- TOGGLE móvil -->
+    <button class="sp-toggle" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen">
+      <i class="bi" [class.bi-list]="!menuOpen" [class.bi-x-lg]="menuOpen"></i>
+    </button>
+
+  </div>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="sp-mobile-menu" [class.open]="menuOpen">
+    <a class="nav-link" routerLink="/home"       (click)="closeMenu()">Inicio</a>
+    <a class="nav-link" routerLink="/categorias" (click)="closeMenu()">Categorías</a>
+    <a class="nav-link" routerLink="/productos"  (click)="closeMenu()">Productos</a>
+    <a class="nav-link" (click)="scrollToSection('como-trabajamos'); closeMenu()">Cómo Trabajamos</a>
+
+    <div class="sp-search">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" placeholder="Search Products..." [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
+    </div>
+
+    <div class="sp-actions-mobile">
+      <a class="sp-btn-outline" routerLink="/auth/login"    (click)="closeMenu()">
+        <i class="bi bi-person"></i> Login
+      </a>
+      <a class="sp-btn-primary" routerLink="/auth/register" (click)="closeMenu()">
+        <i class="bi bi-person-plus"></i> Register
+      </a>
+    </div>
+  </div>
+</header>

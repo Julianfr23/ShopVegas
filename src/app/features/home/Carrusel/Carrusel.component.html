@@ -1,0 +1,12 @@
+<!-- carrusel.component.html -->
+<section class="sp-carrusel">
+  <div class="carrusel-bg"></div>
+  <div class="carrusel-row">
+    <div class="carrusel-track">
+      <div class="carrusel-img-wrap"
+           *ngFor="let img of images.concat(images)">
+        <img [src]="img.src" alt="SoulPrint product">
+      </div>
+    </div>
+  </div>
+</section>

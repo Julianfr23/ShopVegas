@@ -1,0 +1,55 @@
+<section class="sp-categories">
+  <div class="section-header">
+    <span class="section-eyebrow">Collections</span>
+    <h2 class="section-title">Explore our <span>categories</span></h2>
+    <p class="section-sub">Customize anything, any way you want</p>
+  </div>
+  <div class="categories-grid">
+    <a class="cat-item cat-item--large"
+       routerLink="/productos" [queryParams]="{categoria: 'MOUSE PAD'}">
+      <img src="assets/images/gamer/mousepad1.PNG" alt="Mouse Pads">
+      <div class="cat-overlay">
+        <span class="cat-name">Mouse Pads</span>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+    <a class="cat-item"
+       routerLink="/productos" [queryParams]="{categoria: 'DESKMAT'}">
+      <img src="assets/images/gamer/deskmat1.png" alt="Desk Mats">
+      <div class="cat-overlay">
+        <span class="cat-name">Desk Mats</span>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+    <a class="cat-item"
+       routerLink="/productos" [queryParams]="{categoria: 'FLEECE BLANKET'}">
+      <img src="assets/images/home/blanket1.jpg" alt="Fleece Blankets">
+      <div class="cat-overlay">
+        <span class="cat-name">Fleece Blankets</span>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+    <a class="cat-item cat-item--tall"
+       routerLink="/productos" [queryParams]="{categoria: 'SHERPA BLANKET'}">
+      <img src="assets/images/home/blanket22.jpg" alt="Sherpa Blankets">
+      <div class="cat-overlay">
+        <span class="cat-name">Sherpa Blankets</span>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+    <a class="cat-item"
+       routerLink="/productos" [queryParams]="{categoria: 'APRON'}">
+      <img src="assets/images/home/apron1.png" alt="Aprons">
+      <div class="cat-overlay">
+        <span class="cat-name">Aprons</span>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+  </div>
+  <div class="categories-cta">
+    <a routerLink="/categorias" class="btn-outline">
+      View all categories
+      <i class="bi bi-arrow-right"></i>
+    </a>
+  </div>
+</section>

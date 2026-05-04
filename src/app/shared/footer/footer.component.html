@@ -1,0 +1,92 @@
+<!-- footer.component.html -->
+<footer class="sp-footer">
+
+  <div class="footer-body">
+
+    <!-- COLUMNA MARCA -->
+    <div class="footer-brand">
+      <a class="footer-logo" routerLink="/">
+        <img src="assets/images/Soulprint_isotipo.png" alt="SoulPrint">
+        <div>
+          <div class="wordmark"><span>Soul</span>Print</div>
+          <div class="footer-tagline">Custom Sublimation</div>
+        </div>
+      </a>
+
+      <p class="footer-desc">
+        Estampados y objetos personalizados con alma.
+        Donde tus ideas toman forma.
+      </p>
+
+      <div class="footer-social">
+        <a class="social-btn" href="https://instagram.com" target="_blank" aria-label="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+        <a class="social-btn" href="https://facebook.com" target="_blank" aria-label="Facebook">
+          <i class="bi bi-facebook"></i>
+        </a>
+        <a class="social-btn" href="https://tiktok.com" target="_blank" aria-label="TikTok">
+          <i class="bi bi-tiktok"></i>
+        </a>
+        <a class="social-btn" href="https://wa.me/573001234567" target="_blank" aria-label="WhatsApp">
+          <i class="bi bi-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- COLUMNA COMPAÑÍA -->
+    <div class="footer-col">
+      <h6>Compañía</h6>
+      <ul>
+        <li><a routerLink="/about">Sobre nosotros</a></li>
+        <li><a routerLink="/home" (click)="scrollToSection('como-trabajamos')">Cómo trabajamos</a></li>
+        <li><a routerLink="/categorias">Categorías</a></li>
+        <li><a routerLink="/productos">Productos</a></li>
+      </ul>
+    </div>
+
+    <!-- COLUMNA AYUDA -->
+    <div class="footer-col">
+      <h6>Ayuda</h6>
+      <ul>
+        <li><a routerLink="/support">Soporte</a></li>
+        <li><a routerLink="/shipping">Envíos</a></li>
+        <li><a routerLink="/returns">Devoluciones</a></li>
+        <li><a routerLink="/terms">Términos</a></li>
+      </ul>
+    </div>
+
+    <!-- COLUMNA NEWSLETTER -->
+    <div class="footer-newsletter">
+      <h6>Novedades</h6>
+      <p>Recibe inspiración, nuevos diseños y ofertas exclusivas.</p>
+      <div class="newsletter-form">
+        <input
+          class="newsletter-input"
+          type="email"
+          placeholder="tu@correo.com"
+          [(ngModel)]="email"
+        >
+        <button class="newsletter-btn" (click)="subscribe()">
+          <i class="bi bi-send"></i> Suscribirme
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <p class="footer-copy">
+        © {{ year }} <strong>SoulPrint</strong>. Todos los derechos reservados.
+      </p>
+      <ul class="footer-legal">
+        <li><a routerLink="/terms">Términos</a></li>
+        <li><a routerLink="/privacy">Privacidad</a></li>
+        <li><a routerLink="/cookies">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+
+</footer>

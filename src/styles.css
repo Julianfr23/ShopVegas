@@ -1,1 +1,678 @@
-/* You can add global styles to this file, and also import other style files */
+/* styles.css — SoulPrint Global Styles */
+
+/* ── FUENTES ── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ══════════════════════════════════════════════════
+   VARIABLES BASE (tema Hogar — default)
+══════════════════════════════════════════════════ */
+:root {
+  /* Paleta fija SoulPrint */
+  --sp-purple:       #9A89C5;
+  --sp-orange:       #EA7838;
+  --sp-cream:        #FFEFDF;
+  --sp-mustard:      #F6C52F;
+  --sp-teal:         #6EB1B0;
+  --sp-dark:         #302F35;
+  --sp-white:        #FFFFFF;
+
+  /* Derivados */
+  --sp-purple-light: rgba(154, 137, 197, 0.12);
+  --sp-orange-light: rgba(234, 120, 56, 0.12);
+  --sp-purple-mid:   rgba(154, 137, 197, 0.35);
+  --sp-orange-mid:   rgba(234, 120, 56, 0.35);
+
+  /* Tipografías */
+  --font-display: 'DM Serif Display', serif;
+  --font-body:    'Inter', sans-serif;
+
+  /* Espaciados */
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   32px;
+  --radius-pill: 999px;
+
+  /* Sombras */
+  --shadow-sm:     0 2px 12px rgba(48, 47, 53, 0.08);
+  --shadow-md:     0 8px 30px rgba(48, 47, 53, 0.12);
+  --shadow-lg:     0 20px 60px rgba(48, 47, 53, 0.16);
+  --shadow-orange: 0 8px 28px rgba(234, 120, 56, 0.28);
+  --shadow-purple: 0 8px 28px rgba(154, 137, 197, 0.28);
+
+  /* ── VARIABLES DE TEMA (Hogar default) ── */
+  --theme-bg:           #FFEFDF;
+  --theme-bg-alt:       #FFFFFF;
+  --theme-bg-card:      #FFFFFF;
+  --theme-text:         #302F35;
+  --theme-text-muted:   rgba(48, 47, 53, 0.55);
+  --theme-border:       rgba(154, 137, 197, 0.15);
+  --theme-accent:       #EA7838;
+  --theme-accent-2:     #9A89C5;
+  --theme-accent-glow:  0 8px 28px rgba(234, 120, 56, 0.28);
+  --theme-section-dark: #302F35;
+  --theme-eyebrow:      #EA7838;
+  --theme-title:        #302F35;
+  --theme-card-hover-border: #EA7838;
+  --theme-tag:          #9A89C5;
+  --theme-price:        #EA7838;
+  --theme-btn-bg:       #EA7838;
+  --theme-btn-color:    #FFFFFF;
+  --theme-btn-hover:    #d96a2c;
+}
+
+/* ══════════════════════════════════════════════════
+   TEMA GAMER — SOLO aplica en páginas específicas
+   NO toca el home (sp-home, hero-split, banner-cta, etc.)
+══════════════════════════════════════════════════ */
+
+/* Selector base: solo páginas fuera del home */
+.sp-categorias-page,
+.sp-product-list,
+.sp-product-detail,
+.sp-cart-page,
+.sp-custom-page {
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+/* ── FONDOS de página ── */
+body[data-theme="gamer"] .sp-categorias-page,
+body[data-theme="gamer"] .sp-product-list,
+body[data-theme="gamer"] .sp-product-detail,
+body[data-theme="gamer"] .sp-cart-page,
+body[data-theme="gamer"] .sp-custom-page {
+  background: #0f0c1a;
+}
+
+/* ── GRID de fondo tipo arcade ── */
+body[data-theme="gamer"] .sp-categorias-page::before,
+body[data-theme="gamer"] .sp-product-list::before,
+body[data-theme="gamer"] .sp-cart-page::before,
+body[data-theme="gamer"] .sp-custom-page::before,
+body[data-theme="gamer"] .sp-product-detail::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(180,130,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,130,255,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── TEXTOS GENERALES — forzar claro en gamer ── */
+body[data-theme="gamer"] .sp-categorias-page *,
+body[data-theme="gamer"] .sp-product-list *,
+body[data-theme="gamer"] .sp-product-detail *,
+body[data-theme="gamer"] .sp-cart-page *,
+body[data-theme="gamer"] .sp-custom-page * {
+  --sp-dark: #e8e0ff;
+}
+
+/* Títulos de sección */
+body[data-theme="gamer"] .sp-categorias-page .section-title,
+body[data-theme="gamer"] .sp-categorias-page .hero-title,
+body[data-theme="gamer"] .sp-categorias-page .cat-card-name,
+body[data-theme="gamer"] .sp-categorias-page .cat-bottom-text h2,
+body[data-theme="gamer"] .sp-product-list .section-title,
+body[data-theme="gamer"] .sp-product-list .pl-title,
+body[data-theme="gamer"] .sp-product-list .pc-name,
+body[data-theme="gamer"] .sp-product-list .pr-name,
+body[data-theme="gamer"] .sp-product-detail .pd-name,
+body[data-theme="gamer"] .sp-product-detail .section-title,
+body[data-theme="gamer"] .sp-cart-page .cart-title,
+body[data-theme="gamer"] .sp-cart-page .ci-name,
+body[data-theme="gamer"] .sp-cart-page .summary-title,
+body[data-theme="gamer"] .sp-cart-page .co-summary-card h3,
+body[data-theme="gamer"] .sp-cart-page .confirm-hero h1,
+body[data-theme="gamer"] .sp-cart-page .confirm-card-title,
+body[data-theme="gamer"] .sp-cart-page .cf-section-title,
+body[data-theme="gamer"] .sp-custom-page .custom-title,
+body[data-theme="gamer"] .sp-custom-page .panel-label,
+body[data-theme="gamer"] .sp-custom-page .stage-label {
+  color: #e8e0ff !important;
+}
+
+/* Textos body / párrafos */
+body[data-theme="gamer"] .sp-categorias-page .cat-card-desc,
+body[data-theme="gamer"] .sp-categorias-page .hero-sub,
+body[data-theme="gamer"] .sp-categorias-page .stat-pill span,
+body[data-theme="gamer"] .sp-categorias-page .cat-bottom-text p,
+body[data-theme="gamer"] .sp-product-list .pl-count,
+body[data-theme="gamer"] .sp-product-list .pc-link,
+body[data-theme="gamer"] .sp-product-list .pr-desc,
+body[data-theme="gamer"] .sp-product-list .section-sub,
+body[data-theme="gamer"] .sp-product-list .option-label,
+body[data-theme="gamer"] .sp-product-list .sidebar-label,
+body[data-theme="gamer"] .sp-product-detail .pd-desc,
+body[data-theme="gamer"] .sp-product-detail .pd-price-note,
+body[data-theme="gamer"] .sp-product-detail .shipping-item,
+body[data-theme="gamer"] .sp-product-detail .pd-breadcrumb-inner a,
+body[data-theme="gamer"] .sp-product-detail .pd-breadcrumb-inner span,
+body[data-theme="gamer"] .sp-cart-page .cart-subtitle,
+body[data-theme="gamer"] .sp-cart-page .ci-unit,
+body[data-theme="gamer"] .sp-cart-page .summary-row,
+body[data-theme="gamer"] .sp-cart-page .co-row,
+body[data-theme="gamer"] .sp-cart-page .ci-variant,
+body[data-theme="gamer"] .sp-cart-page .security-row,
+body[data-theme="gamer"] .sp-cart-page .cf-security,
+body[data-theme="gamer"] .sp-cart-page .confirm-hero p,
+body[data-theme="gamer"] .sp-cart-page .cil-row strong,
+body[data-theme="gamer"] .sp-cart-page .confirm-delivery strong,
+body[data-theme="gamer"] .sp-cart-page .co-delivery,
+body[data-theme="gamer"] .sp-custom-page .upload-zone span,
+body[data-theme="gamer"] .sp-custom-page .price-row,
+body[data-theme="gamer"] .sp-custom-page .stage-hint {
+  color: rgba(232, 224, 255, 0.6) !important;
+}
+
+/* Eyebrows / tags */
+body[data-theme="gamer"] .sp-categorias-page .section-eyebrow,
+body[data-theme="gamer"] .sp-categorias-page .hero-eyebrow,
+body[data-theme="gamer"] .sp-categorias-page .cat-card-tag,
+body[data-theme="gamer"] .sp-product-list .section-eyebrow,
+body[data-theme="gamer"] .sp-product-list .pc-tag,
+body[data-theme="gamer"] .sp-product-list .pr-category,
+body[data-theme="gamer"] .sp-product-list .product-category,
+body[data-theme="gamer"] .sp-product-detail .pd-category,
+body[data-theme="gamer"] .sp-cart-page .ci-category,
+body[data-theme="gamer"] .sp-custom-page .custom-eyebrow {
+  color: #F6C52F !important;
+}
+
+/* Precios */
+body[data-theme="gamer"] .sp-product-list .pc-price,
+body[data-theme="gamer"] .sp-product-list .pr-price,
+body[data-theme="gamer"] .sp-product-detail .pd-price,
+body[data-theme="gamer"] .sp-cart-page .ci-total,
+body[data-theme="gamer"] .sp-cart-page .summary-total strong,
+body[data-theme="gamer"] .sp-cart-page .co-total strong,
+body[data-theme="gamer"] .sp-cart-page .confirm-total strong,
+body[data-theme="gamer"] .sp-cart-page .confirm-item-price,
+body[data-theme="gamer"] .sp-cart-page .pr-price,
+body[data-theme="gamer"] .sp-custom-page .price-total strong {
+  color: #9A89C5 !important;
+}
+
+/* ── CARDS ── */
+body[data-theme="gamer"] .sp-product-list .product-card,
+body[data-theme="gamer"] .sp-product-list .product-row,
+body[data-theme="gamer"] .sp-categorias-page .cat-card,
+body[data-theme="gamer"] .sp-cart-page .cart-item,
+body[data-theme="gamer"] .sp-cart-page .summary-card,
+body[data-theme="gamer"] .sp-cart-page .co-summary-card,
+body[data-theme="gamer"] .sp-cart-page .confirm-card,
+body[data-theme="gamer"] .sp-cart-page .confirm-hero,
+body[data-theme="gamer"] .sp-cart-page .cf-section,
+body[data-theme="gamer"] .sp-cart-page .cf-submit,
+body[data-theme="gamer"] .sp-cart-page .pay-opt,
+body[data-theme="gamer"] .sp-cart-page .payment-options,
+body[data-theme="gamer"] .sp-custom-page .custom-panel,
+body[data-theme="gamer"] .sp-custom-page .stage-box,
+body[data-theme="gamer"] .sp-custom-page .panel-price {
+  background: #1e1730 !important;
+  border-color: rgba(154,137,197,0.2) !important;
+}
+
+/* Nombre de producto en cards */
+body[data-theme="gamer"] .sp-product-list .pc-name,
+body[data-theme="gamer"] .sp-product-list .pr-name,
+body[data-theme="gamer"] .sp-product-detail .pd-name {
+  color: #e8e0ff !important;
+}
+
+/* ── TOPBARS ── */
+body[data-theme="gamer"] .pl-topbar,
+body[data-theme="gamer"] .pd-breadcrumb,
+body[data-theme="gamer"] .cart-topbar,
+body[data-theme="gamer"] .custom-header,
+body[data-theme="gamer"] .checkout-progress {
+  background: #1a1428 !important;
+  border-color: rgba(154,137,197,0.2) !important;
+}
+
+body[data-theme="gamer"] .pl-topbar .pl-title,
+body[data-theme="gamer"] .cart-topbar .cart-title,
+body[data-theme="gamer"] .custom-header .custom-title {
+  color: #e8e0ff !important;
+}
+
+/* ── SIDEBAR ── */
+body[data-theme="gamer"] .pl-sidebar {
+  background: #1e1730 !important;
+  border-color: rgba(154,137,197,0.2) !important;
+}
+
+body[data-theme="gamer"] .sidebar-header,
+body[data-theme="gamer"] .sidebar-option .option-label {
+  color: #e8e0ff !important;
+}
+
+/* ── INPUTS ── */
+body[data-theme="gamer"] .sp-product-list .pl-search input,
+body[data-theme="gamer"] .sp-product-list .pl-sort,
+body[data-theme="gamer"] .sp-product-detail .qty-input,
+body[data-theme="gamer"] .sp-product-detail .qty-control,
+body[data-theme="gamer"] .sp-cart-page .cf-input-wrap input,
+body[data-theme="gamer"] .sp-cart-page .ci-qty,
+body[data-theme="gamer"] .sp-custom-page .qty-control,
+body[data-theme="gamer"] .sp-custom-page .upload-zone,
+body[data-theme="gamer"] .sp-custom-page .img-list-item {
+  background: #130f22 !important;
+  border-color: rgba(154,137,197,0.2) !important;
+  color: #e8e0ff !important;
+}
+
+body[data-theme="gamer"] .sp-product-list .pl-search input::placeholder,
+body[data-theme="gamer"] .sp-cart-page .cf-input-wrap input::placeholder {
+  color: rgba(232,224,255,0.3) !important;
+}
+
+/* ── LABELS DE CAMPOS ── */
+body[data-theme="gamer"] .sp-cart-page .cf-field label,
+body[data-theme="gamer"] .sp-cart-page .pd-field-label,
+body[data-theme="gamer"] .sp-product-detail .pd-field-label,
+body[data-theme="gamer"] .sp-cart-page .cil-row span {
+  color: rgba(232,224,255,0.45) !important;
+}
+
+/* ── BOTONES PRIMARIOS ── */
+body[data-theme="gamer"] .sp-product-list .pc-btn--custom,
+body[data-theme="gamer"] .sp-product-list .pr-btn--custom,
+body[data-theme="gamer"] .sp-product-list .sidebar-cta-btn,
+body[data-theme="gamer"] .sp-product-list .btn-clear,
+body[data-theme="gamer"] .sp-product-list .empty-btn-primary,
+body[data-theme="gamer"] .sp-product-detail .pd-btn--buy,
+body[data-theme="gamer"] .sp-product-detail .pd-back-btn,
+body[data-theme="gamer"] .sp-cart-page .checkout-btn,
+body[data-theme="gamer"] .sp-cart-page .pay-btn,
+body[data-theme="gamer"] .sp-cart-page .confirm-btn-primary,
+body[data-theme="gamer"] .sp-cart-page .empty-btn-primary,
+body[data-theme="gamer"] .sp-custom-page .buy-btn,
+body[data-theme="gamer"] .sp-categorias-page .cat-bottom-btn,
+body[data-theme="gamer"] .sp-categorias-page .btn-outline {
+  background: #9A89C5 !important;
+  color: #0f0c1a !important;
+  border-color: #9A89C5 !important;
+  box-shadow: 0 8px 28px rgba(154,137,197,0.4) !important;
+}
+
+/* ── SECCIONES OSCURAS ── */
+body[data-theme="gamer"] .sp-products-featured,
+body[data-theme="gamer"] .cat-bottom-cta {
+  background: #0a0814 !important;
+}
+
+/* ── HERO DE CATEGORIAS ── */
+body[data-theme="gamer"] .sp-categorias-page .cat-hero {
+  background: linear-gradient(135deg, #0d0820 0%, #1a0a35 50%, #0f0c1a 100%) !important;
+}
+
+body[data-theme="gamer"] .sp-categorias-page .cat-hero-blob--1 {
+  background: rgba(154,137,197,0.2) !important;
+}
+
+body[data-theme="gamer"] .sp-categorias-page .stat-pill {
+  background: rgba(154,137,197,0.1) !important;
+  border-color: rgba(154,137,197,0.25) !important;
+}
+
+body[data-theme="gamer"] .sp-categorias-page .stat-pill strong {
+  color: #F6C52F !important;
+}
+
+/* ── PRODUCT DETAIL EXTRAS ── */
+body[data-theme="gamer"] .sp-product-detail {
+  background: #0f0c1a !important;
+}
+
+body[data-theme="gamer"] .sp-product-detail .pd-breadcrumb {
+  background: #1a1428 !important;
+}
+
+body[data-theme="gamer"] .sp-product-detail .pd-total {
+  background: #1a1428 !important;
+  border-color: rgba(154,137,197,0.15) !important;
+}
+
+body[data-theme="gamer"] .sp-product-detail .pd-total span {
+  color: rgba(232,224,255,0.45) !important;
+}
+
+body[data-theme="gamer"] .sp-product-detail .pd-total strong {
+  color: #9A89C5 !important;
+}
+
+body[data-theme="gamer"] .sp-product-detail .pd-custom-cta {
+  background: rgba(154,137,197,0.08) !important;
+  border-color: rgba(154,137,197,0.2) !important;
+}
+
+body[data-theme="gamer"] .sp-product-detail .variant-pill {
+  background: #1e1730 !important;
+  border-color: rgba(154,137,197,0.2) !important;
+  color: #e8e0ff !important;
+}
+
+body[data-theme="gamer"] .sp-product-detail .qty-btn {
+  color: #e8e0ff !important;
+}
+
+/* ── CONFIRMACION ── */
+body[data-theme="gamer"] .sp-cart-page .confirm-order-id {
+  background: #1e1730 !important;
+  border-color: rgba(154,137,197,0.2) !important;
+  color: rgba(232,224,255,0.6) !important;
+}
+
+body[data-theme="gamer"] .sp-cart-page .confirm-item-info strong,
+body[data-theme="gamer"] .sp-cart-page .co-item-info strong {
+  color: #e8e0ff !important;
+}
+
+body[data-theme="gamer"] .sp-cart-page .confirm-item-info span,
+body[data-theme="gamer"] .sp-cart-page .co-item-info span {
+  color: rgba(232,224,255,0.45) !important;
+}
+
+/* ── CUSTOM DESIGNER ── */
+body[data-theme="gamer"] .sp-custom-page .product-pill,
+body[data-theme="gamer"] .sp-custom-page .measure-pill {
+  background: #1a1428 !important;
+  border-color: rgba(154,137,197,0.2) !important;
+  color: #e8e0ff !important;
+}
+
+body[data-theme="gamer"] .sp-custom-page .product-pill.active,
+body[data-theme="gamer"] .sp-custom-page .measure-pill.active {
+  background: #9A89C5 !important;
+  color: #0f0c1a !important;
+}
+
+body[data-theme="gamer"] .sp-custom-page .img-list-item span {
+  color: rgba(232,224,255,0.6) !important;
+}
+
+body[data-theme="gamer"] .sp-custom-page .back-link {
+  color: rgba(232,224,255,0.5) !important;
+}
+
+/* Header en modo gamer — SOLO cuando NO estamos en el home
+   El home tiene clase sp-home, así que usamos :not para excluirlo */
+body[data-theme="gamer"]:not(.on-home) .sp-header {
+  background: rgba(15, 12, 26, 0.92) !important;
+  border-bottom-color: rgba(154, 137, 197, 0.2) !important;
+}
+
+body[data-theme="gamer"]:not(.on-home) .logo-print {
+  color: rgba(232, 224, 255, 0.9) !important;
+}
+
+body[data-theme="gamer"]:not(.on-home) .logo-soul {
+  color: var(--sp-purple) !important;
+}
+
+body[data-theme="gamer"]:not(.on-home) .sp-nav-link {
+  color: rgba(232, 224, 255, 0.75) !important;
+}
+
+body[data-theme="gamer"]:not(.on-home) .sp-nav-link:hover {
+  color: var(--sp-purple) !important;
+}
+
+body[data-theme="gamer"]:not(.on-home) .sp-search-input {
+  background: rgba(154,137,197,0.08) !important;
+  border-color: rgba(154,137,197,0.2) !important;
+  color: #e8e0ff !important;
+}
+
+body[data-theme="gamer"]:not(.on-home) .sp-cart-count {
+  background: var(--sp-purple) !important;
+}
+
+/* ══════════════════════════════════════════════════
+   RESET Y BASE
+══════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--sp-cream);
+  color: var(--sp-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.3s ease;
+}
+
+/* ── TIPOGRAFÍA ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--sp-dark);
+  line-height: 1.2;
+}
+
+p { font-family: var(--font-body); color: var(--sp-dark); }
+a { color: inherit; text-decoration: none; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button { font-family: var(--font-body); cursor: pointer; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: var(--sp-cream); }
+::-webkit-scrollbar-thumb  { background: var(--sp-purple); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sp-orange); }
+
+body[data-theme="gamer"]::-webkit-scrollbar-track { background: #0f0c1a; }
+body[data-theme="gamer"]::-webkit-scrollbar-thumb { background: var(--sp-purple); }
+
+/* ── UTILIDADES ── */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.text-orange  { color: var(--sp-orange)  !important; }
+.text-purple  { color: var(--sp-purple)  !important; }
+.text-teal    { color: var(--sp-teal)    !important; }
+.text-mustard { color: var(--sp-mustard) !important; }
+.bg-cream     { background-color: var(--sp-cream) !important; }
+.bg-dark      { background-color: var(--sp-dark)  !important; }
+
+.sp-section { padding: 6rem 0; }
+@media (max-width: 768px) { .sp-section { padding: 4rem 0; } }
+
+/* ── ANIMACIONES GLOBALES ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-up  { animation: fadeUp  0.6s ease forwards; }
+.animate-fade-in  { animation: fadeIn  0.5s ease forwards; }
+.animate-scale-in { animation: scaleIn 0.5s ease forwards; }
+
+/* ════════════════════════════════════════════════════════════
+   FONDO ARTÍSTICO — MODO HOME (pinceladas de brocha)
+   Aplica en TODAS las páginas fuera del home cuando tema=hogar
+════════════════════════════════════════════════════════════ */
+
+/* Variables de pinceladas — reutilizables */
+:root {
+  --brush-bg:
+    /* Pincelada grande naranja top-left */
+    radial-gradient(ellipse 55% 28% at -5% 8%,
+      rgba(234,120,56,0.28) 0%, transparent 65%),
+    /* Manchón morado top-right */
+    radial-gradient(ellipse 40% 22% at 105% 5%,
+      rgba(154,137,197,0.22) 0%, transparent 60%),
+    /* Trazo mostaza lateral izquierdo */
+    radial-gradient(ellipse 22% 45% at -3% 45%,
+      rgba(246,197,47,0.18) 0%, transparent 65%),
+    /* Mancha teal bottom-left */
+    radial-gradient(ellipse 35% 22% at 8% 95%,
+      rgba(110,177,176,0.22) 0%, transparent 60%),
+    /* Pincelada naranja bottom-right */
+    radial-gradient(ellipse 45% 25% at 108% 90%,
+      rgba(234,120,56,0.20) 0%, transparent 65%),
+    /* Manchón morado mid-right */
+    radial-gradient(ellipse 28% 38% at 102% 55%,
+      rgba(154,137,197,0.16) 0%, transparent 60%),
+    /* Trazo mostaza top-center */
+    radial-gradient(ellipse 30% 18% at 50% -5%,
+      rgba(246,197,47,0.14) 0%, transparent 60%),
+    /* Tono crema base */
+    #FFEFDF;
+}
+
+/* Aplicar a TODAS las páginas en modo Home */
+body:not([data-theme="gamer"]):not(.on-home) .sp-product-list,
+body:not([data-theme="gamer"]):not(.on-home) .sp-product-detail,
+body:not([data-theme="gamer"]):not(.on-home) .sp-categorias-page,
+body:not([data-theme="gamer"]):not(.on-home) .sp-cart-page,
+body:not([data-theme="gamer"]):not(.on-home) .sp-custom-page {
+  background: var(--brush-bg) !important;
+  position: relative;
+}
+
+/* Textura grain tipo lienzo sobre el fondo */
+body:not([data-theme="gamer"]):not(.on-home) .sp-product-list::after,
+body:not([data-theme="gamer"]):not(.on-home) .sp-product-detail::after,
+body:not([data-theme="gamer"]):not(.on-home) .sp-categorias-page::after,
+body:not([data-theme="gamer"]):not(.on-home) .sp-cart-page::after,
+body:not([data-theme="gamer"]):not(.on-home) .sp-custom-page::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+
+/* Cards con fondo blanco translúcido sobre el lienzo */
+body:not([data-theme="gamer"]):not(.on-home) .product-card,
+body:not([data-theme="gamer"]):not(.on-home) .product-row,
+body:not([data-theme="gamer"]):not(.on-home) .cat-card,
+body:not([data-theme="gamer"]):not(.on-home) .cart-item,
+body:not([data-theme="gamer"]):not(.on-home) .summary-card,
+body:not([data-theme="gamer"]):not(.on-home) .co-summary-card,
+body:not([data-theme="gamer"]):not(.on-home) .confirm-card,
+body:not([data-theme="gamer"]):not(.on-home) .confirm-hero,
+body:not([data-theme="gamer"]):not(.on-home) .cf-section,
+body:not([data-theme="gamer"]):not(.on-home) .cf-submit,
+body:not([data-theme="gamer"]):not(.on-home) .pl-sidebar,
+body:not([data-theme="gamer"]):not(.on-home) .custom-panel {
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(8px);
+  border-color: rgba(234,120,56,0.15) !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Topbars translúcidas */
+body:not([data-theme="gamer"]):not(.on-home) .pl-topbar,
+body:not([data-theme="gamer"]):not(.on-home) .pd-breadcrumb,
+body:not([data-theme="gamer"]):not(.on-home) .cart-topbar,
+body:not([data-theme="gamer"]):not(.on-home) .custom-header,
+body:not([data-theme="gamer"]):not(.on-home) .checkout-progress {
+  background: rgba(255, 239, 223, 0.88) !important;
+  backdrop-filter: blur(12px);
+  border-bottom-color: rgba(234,120,56,0.18) !important;
+  position: relative;
+  z-index: 100;
+}
+
+/* Inputs translúcidos */
+body:not([data-theme="gamer"]):not(.on-home) .pl-search input,
+body:not([data-theme="gamer"]):not(.on-home) .pl-sort,
+body:not([data-theme="gamer"]):not(.on-home) .cf-input-wrap input,
+body:not([data-theme="gamer"]):not(.on-home) .pd-select,
+body:not([data-theme="gamer"]):not(.on-home) .qty-control,
+body:not([data-theme="gamer"]):not(.on-home) .ci-qty,
+body:not([data-theme="gamer"]):not(.on-home) .price-input-wrap {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(6px);
+}
+
+/* Contenido siempre encima del fondo */
+body:not([data-theme="gamer"]):not(.on-home) .pl-body,
+body:not([data-theme="gamer"]):not(.on-home) .pl-content,
+body:not([data-theme="gamer"]):not(.on-home) .pd-main,
+body:not([data-theme="gamer"]):not(.on-home) .pd-accordion,
+body:not([data-theme="gamer"]):not(.on-home) .pd-inspirate,
+body:not([data-theme="gamer"]):not(.on-home) .cat-grid-section,
+body:not([data-theme="gamer"]):not(.on-home) .cart-body,
+body:not([data-theme="gamer"]):not(.on-home) .checkout-body,
+body:not([data-theme="gamer"]):not(.on-home) .confirm-view,
+body:not([data-theme="gamer"]):not(.on-home) .custom-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MODO GAMER — fondo galáctico oscuro en TODAS las páginas
+════════════════════════════════════════════════════════════ */
+
+body[data-theme="gamer"]:not(.on-home) {
+  background: #0f0c1a;
+}
+
+/* Fondo galáctico aplicado al body para que cubra todo */
+body[data-theme="gamer"]:not(.on-home)::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 30%,
+      #1a0a35 0%, #0d0820 40%, #050310 100%),
+    linear-gradient(135deg, #0f0c1a 0%, #050310 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Grid neón arcade en fondo */
+body[data-theme="gamer"]:not(.on-home)::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(180,130,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,130,255,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  z-index: -1;
+  pointer-events: none;
+  animation: gridPulse 4s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%,100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}

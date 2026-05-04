@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './carrusel.component.html',
   styleUrls: ['./carrusel.component.css'],
 })
-export class CarruselComponent {
+export class carruselComponent {
   images = [
     { src: 'assets/images/gamer/deskmat1.png' },
     { src: 'assets/images/home/apron1.png'      },

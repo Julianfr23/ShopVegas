@@ -2,11 +2,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from "../../shared/header/header.component";
 
 @Component({
   selector: 'app-categorias',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HeaderComponent],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css'],
 })

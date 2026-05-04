@@ -3,6 +3,7 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from "../../../shared/header/header.component";
 
 export interface CartItem {
   id: number | string;
@@ -46,7 +47,7 @@ export interface CustomerInfo {
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })

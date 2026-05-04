@@ -1,42 +1,12 @@
-<div [id]="carouselId" class="carousel slide" [class.carousel-fade]="fade" data-bs-ride="carousel"
-  [attr.data-bs-interval]="intervalMs" data-bs-touch="true" data-bs-keyboard="true"
-  aria-label="Carrusel principal Soulprint">
-
-  <!-- Indicadores dinámicos -->
-  <div *ngIf="showIndicators" class="carousel-indicators">
-    <button *ngFor="let slide of slides; let i = index" type="button" [attr.data-bs-target]="'#' + carouselId"
-      [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
-      [attr.aria-label]="'Slide ' + (i + 1)">
-    </button>
-  </div>
-
-  <!-- Slides dinámicos -->
-  <div class="carousel-inner">
-    <div *ngFor="let slide of slides; let i = index" class="carousel-item" [class.active]="i === 0">
-      <img [src]="slide.imageUrl" [alt]="slide.alt" class="d-block w-100 hero-img">
-
-      <div
-        class="carousel-caption d-flex flex-column justify-content-center align-items-center text-center hero-caption">
-        <h2 class="caption-title">{{ slide.title }}</h2>
-        <p class="caption-sub">{{ slide.subtitle }}</p>
-        <a *ngIf="slide.cta" [routerLink]="slide.cta.link" class="btn btn-cta">
-          {{ slide.cta.label }}
-        </a>
+<!-- carrusel.component.html -->
+<section class="sp-carrusel">
+  <div class="carrusel-bg"></div>
+  <div class="carrusel-row">
+    <div class="carrusel-track">
+      <div class="carrusel-img-wrap"
+           *ngFor="let img of images.concat(images)">
+        <img [src]="img.src" alt="SoulPrint product">
       </div>
-
     </div>
   </div>
-
-  <!-- Controles opcionales -->
-  <button *ngIf="showControls" class="carousel-control-prev" type="button" [attr.data-bs-target]="'#' + carouselId"
-    data-bs-slide="prev" aria-label="Anterior">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Anterior</span>
-  </button>
-
-  <button *ngIf="showControls" class="carousel-control-next" type="button" [attr.data-bs-target]="'#' + carouselId"
-    data-bs-slide="next" aria-label="Siguiente">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Siguiente</span>
-  </button>
-</div>
+</section>

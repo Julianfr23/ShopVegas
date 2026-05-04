@@ -1,29 +1,31 @@
+// home.component.ts
 import { Component } from '@angular/core';
-import CarruselComponent from './Carrusel/Carrusel.component';
-import BannerCtaComponent from './BannerCta/BannerCta.component';
-import BenefitsComponent from './Benefits/Benefits.component';
-import CategoriesComponent from './Categories/Categories.component';
-import ExplainProcessComponent from './ExplainProcess/ExplainProcess.component';
-import UniquesComponent from './Uniques/Uniques.component';
-import {HeaderComponent} from '../../shared/header/header.component';
-import {FooterComponent} from '../../shared/footer/footer.component';
-import { ExclusiveComponent } from "./exclusive/exclusive.component";
+import { CommonModule } from '@angular/common';
+
+import { HeroSplitComponent } from './hero-split/hero-split.component';
+import { BannerCtaComponent } from './BannerCta/BannerCta.component';
+import { CategoriesComponent } from './Categories/Categories.component';
+import { ProductsFeaturedComponent } from './products-featured/products-featured.component';
+import { TestimonialsComponent } from './Testimonials/Testimonials.component';
+import { HeaderComponent } from '../../shared/header/header.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { CarruselComponent } from './Carrusel/carrusel.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
+    CommonModule,
     CarruselComponent,
+    HeroSplitComponent,
     BannerCtaComponent,
-    BenefitsComponent,
     CategoriesComponent,
-    ExplainProcessComponent,
-    UniquesComponent,
+    ProductsFeaturedComponent,
+    TestimonialsComponent,
     HeaderComponent,
-    FooterComponent,
-    ExclusiveComponent
-],
+    FooterComponent
+  ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-export  class HomeComponent {}
+export class HomeComponent { }

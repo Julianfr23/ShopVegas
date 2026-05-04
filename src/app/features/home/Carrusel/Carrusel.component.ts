@@ -1,49 +1,29 @@
-import { Component, Input } from "@angular/core";
-import { NgFor, NgIf } from "@angular/common";
-import { RouterLink } from "@angular/router";
-import { Slide } from "../../../core/models/slide.interface";
+// carrusel.component.ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carrusel',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink],
-  templateUrl: './Carrusel.component.html',
-  styleUrl: './Carrusel.component.css',
+  imports: [CommonModule],
+  templateUrl: './carrusel.component.html',
+  styleUrls: ['./carrusel.component.css'],
 })
-export default class CarruselComponent {
-  @Input() intervalMs = 5000;
-  @Input() showIndicators = true;
-  @Input() showControls = true;
-  @Input() fade = true;
-
-  carouselId = 'heroCarousel';
-
-  slides: Slide[] = [
-    {
-      id: '1',
-      imageUrl: 'assets/images/slide1.jpg',
-      alt: 'Buzos personalizados en varios colores',
-      title: 'Estampa tu mundo',
-      subtitle: 'Buzos, mugs, cobijas y mas - hechos a tu medida',
-      cta: { label: 'Explorar productos', link: '/catalog' }
-
-    },
-    {
-      id: '2',
-      imageUrl: 'assets/images/slide2.jpg',
-      alt: 'Taza personalizada sobre mesa',
-      title: 'Diseña y nosotros producimos',
-      subtitle: 'Calidad premium y envios confiables',
-      cta: { label: 'Crear diseño', link: '/catalog/personalizado' }
-    },
-    {
-      id: '3',
-      imageUrl: 'assets/images/slide3.jpg',
-      alt: 'Cobija y mousepad con estampado',
-      title: 'Para hogar y oficina',
-      subtitle: 'Descubre ideas para regalar',
-      cta: { label: 'Ver ideas', link: '/catalog?gift=true' }
-    }
-  ]
+export class CarruselComponent {
+  images = [
+    { src: 'assets/images/gamer/deskmat1.png' },
+    { src: 'assets/images/home/apron1.png'      },
+    { src: 'assets/images/gamer/mousepad3.PNG'       },
+    { src: 'assets/images/home/blanket7.png'            },
+    { src: 'assets/images/gamer/mousepad9.png'      },
+    { src: 'assets/images/home/blanket33.jpg'     },
+    { src: 'assets/images/gamer/mousepad1.png'             },
+    { src: 'assets/images/home/apron4.png'         },
+    { src: 'assets/images/gamer/deskmat3.png'           },
+    { src: 'assets/images/home/blanket33.jpg'          },
+    { src: 'assets/images/gamer/deskmat11.png'          },
+    { src: 'assets/images/home/apron2.png'     },
+    { src: 'assets/images/gamer/mousepad5.PNG'    },
+    { src: 'assets/images/home/blanket34.jpg'             },
+  ];
 }
-

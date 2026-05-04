@@ -1,97 +1,73 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+// categorias.component.ts
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../shared/header/header.component';
-import { FooterComponent } from '../../shared/footer/footer.component';
-import { Router } from '@angular/router'; // ✅ Importamos el Router
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-categorias',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css'],
 })
-export class CategoriasComponent implements OnInit, AfterViewInit, OnDestroy {
-  activeIndex = 0;
-  private autoSlideInterval: any;
+export class CategoriasComponent {
+
+  activeCategory: string | null = null;
 
   categories = [
     {
-      name: 'Moda',
-      description:
-        'Descubre las últimas tendencias en moda para cada ocasión. Estilo y calidad en cada prenda.',
-      image: 'assets/images/buzoo.jpg',
-      icon: 'fas fa-tshirt',
+      id: 'Buzos',
+      name: 'Hoodies & Sweatshirts',
+      tag: 'Apparel',
+      icon: 'bi-stars',
+      count: 12,
+      imageUrl: 'assets/images/buzoo.jpg',
+      description: 'Bold graphics, soft fabric. Design your perfect hoodie with your artwork, photo, or logo — sublimated in full color for lasting vibrancy.'
     },
     {
-      name: 'Tecnología',
-      description:
-        'Innovación y potencia en cada dispositivo. Lo último en gadgets y electrónicos.',
-      image: 'assets/images/camibuso.jpg',
-      icon: 'fas fa-laptop',
+      id: 'Camibusos',
+      name: 'T-Shirts',
+      tag: 'Apparel',
+      icon: 'bi-person',
+      count: 18,
+      imageUrl: 'assets/images/camibuso.jpg',
+      description: 'Lightweight and breathable tees that carry your identity. Perfect for everyday wear, events, or gifting to someone special.'
     },
     {
-      name: 'Hogar',
-      description:
-        'Transforma tu espacio con nuestra selección premium de productos para el hogar.',
-      image: 'assets/images/cobija.jpg',
-      icon: 'fas fa-home',
+      id: 'Mugs',
+      name: 'Mugs & Tumblers',
+      tag: 'Kitchen',
+      icon: 'bi-cup-hot',
+      count: 8,
+      imageUrl: 'assets/images/mugs.jpg',
+      description: 'Start every morning with a mug that tells your story. Wrap-around prints, photos, or illustrations — dishwasher safe and built to last.'
     },
     {
-      name: 'Deportes',
-      description:
-        'Equípate para superar tus límites. Tecnología y diseño en cada producto deportivo.',
-      image: 'assets/images/mugs.jpg',
-      icon: 'fas fa-running',
+      id: 'Cobijas',
+      name: 'Blankets',
+      tag: 'Home',
+      icon: 'bi-house-heart',
+      count: 6,
+      imageUrl: 'assets/images/cobija.jpg',
+      description: 'Ultra-soft custom blankets printed edge to edge. Ideal for cozy nights, memorable gifts, or showing off your favorite memories.'
+    },
+    {
+      id: 'Mousepads',
+      name: 'Mouse Pads',
+      tag: 'Gaming / Office',
+      icon: 'bi-controller',
+      count: 10,
+      imageUrl: 'assets/images/mousepad.jpg',
+      description: 'Level up your desk setup with a full-print mouse pad. From gamer artwork to minimal aesthetics — precision surface, maximum style.'
+    },
+    {
+      id: 'Vasos',
+      name: 'Tumblers & Cups',
+      tag: 'Kitchen',
+      icon: 'bi-cup-straw',
+      count: 7,
+      imageUrl: 'assets/images/vaso.jpg',
+      description: 'Custom printed tumblers that keep your drinks hot or cold. Great for hydration on the go and as branded merchandise.'
     },
   ];
-
-  constructor(private router: Router) {} // ✅ Inyectamos Router
-
-  ngOnInit() {}
-
-  ngAfterViewInit() {
-    // 🔹 Forzar render de transformaciones cuando el DOM ya existe
-    setTimeout(() => {
-      this.activeIndex = 0;
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.autoSlideInterval) clearInterval(this.autoSlideInterval);
-  }
-
-  getCardTransform(index: number): string {
-    const offset = index - this.activeIndex;
-    const baseTranslateX = offset * 420;
-    const scale = index === this.activeIndex ? 1 : 0.85;
-    const rotateY = offset * 15;
-    const translateZ = index === this.activeIndex ? 50 : -100;
-
-    return `translateX(${baseTranslateX}px) scale(${scale}) rotateY(${rotateY}deg) translateZ(${translateZ}px)`;
-  }
-
-  nextSlide() {
-    this.activeIndex = (this.activeIndex + 1) % this.categories.length;
-  }
-
-  prevSlide() {
-    this.activeIndex = (this.activeIndex - 1 + this.categories.length) % this.categories.length;
-  }
-
-  goToSlide(index: number) {
-    this.activeIndex = index;
-  }
-
-  selectCard(index: number) {
-    this.activeIndex = index;
-    console.log('🟠 Seleccionaste:', this.categories[index].name);
-  }
-
-  // ✅ Nuevo método para redirigir a productos filtrados
-  verProductosPorCategoria(nombreCategoria: string) {
-    this.router.navigate(['/productos'], {
-      queryParams: { categoria: nombreCategoria },
-    });
-  }
 }

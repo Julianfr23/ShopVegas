@@ -1,28 +1,70 @@
-<section class="sp-banner">
-  <!-- Elementos flotantes decorativos -->
-  <div class="floating-elements">
-    <div class="floating-element">★</div>
-    <div class="floating-element">❤</div>
-    <div class="floating-element">✦</div>
+<!-- banner-cta.component.html -->
+<section class="sp-banner-cta">
+
+  <!-- Decoración fondo -->
+  <div class="bct-deco bct-deco--1"></div>
+  <div class="bct-deco bct-deco--2"></div>
+
+  <div class="bct-inner">
+
+    <!-- TEXTO -->
+    <div class="bct-text">
+      <span class="bct-eyebrow">Premium Customization</span>
+      <h2 class="bct-title">
+        Your design on<br>
+        <em>any product</em>
+      </h2>
+      <p class="bct-sub">
+        Upload your image, choose the product and we do the magic.
+        Sublimation quality, colors that last.
+      </p>
+      <a class="bct-btn" routerLink="/product/custom">
+        <i class="bi bi-palette2"></i>
+        Customize Now
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- VITRINA -->
+    <div class="bct-showcase">
+
+      <!-- Producto destacado rotativo -->
+      <div class="bct-featured">
+        <div class="bct-featured-img-wrap">
+          <img
+            *ngFor="let p of products; let i = index"
+            [src]="p.image"
+            [alt]="p.name"
+            class="bct-featured-img"
+            [class.active]="i === activeProduct">
+        </div>
+        <div class="bct-featured-label">
+          <span class="bct-featured-name">{{ products[activeProduct].name }}</span>
+          <span class="bct-featured-badge">
+            <i class="bi bi-patch-check-fill"></i> Personalizable
+          </span>
+        </div>
+      </div>
+
+      <!-- Fila de miniaturas -->
+      <div class="bct-thumbs">
+        <button
+          *ngFor="let p of products; let i = index"
+          class="bct-thumb"
+          [class.active]="i === activeProduct"
+          (click)="setActive(i)"
+          [attr.aria-label]="p.name">
+          <div class="bct-thumb-img">
+            <img [src]="p.image" [alt]="p.name">
+          </div>
+          <span>{{ p.name }}</span>
+        </button>
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-12 col-lg-7">
-        <div class="banner-content">
-          <h2 class="title">{{ banner.title }}</h2>
-          <p class="sub">{{ banner.subtitle }}</p>
-          <a *ngIf="banner.cta" class="btn btn-cta" [routerLink]="banner.cta.link">
-            {{ banner.cta.label }}
-          </a>
-        </div>
-      </div>
-      <div class="col-12 col-lg-5" *ngIf="banner.imageUrl">
-        <div class="banner-image">
-          <div class="holographic-effect"></div>
-          <img [src]="banner.imageUrl" alt="Inspiración de personalización" class="img-fluid">
-        </div>
-      </div>
-    </div>
-  </div>
 </section>

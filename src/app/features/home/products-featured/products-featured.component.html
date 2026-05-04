@@ -1,0 +1,44 @@
+<!-- products-featured.component.html -->
+<section class="sp-products-featured">
+
+  <div class="section-header">
+    <span class="section-eyebrow">Most Ordered</span>
+    <h2 class="section-title">Featured <span>Products</span></h2>
+    <p class="section-sub">The favorites of our community</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card"
+         *ngFor="let p of featuredProducts; let i = index"
+         [style.animation-delay]="i * 0.1 + 's'">
+
+      <div class="product-img-wrap">
+        <img [src]="p.image" [alt]="p.name">
+
+        <div class="product-actions">
+          <a [routerLink]="['/productos/view', p.id]" class="prod-btn prod-btn--view">
+            <i class="bi bi-eye"></i>
+          </a>
+          <a routerLink="/product/custom" class="prod-btn prod-btn--custom">
+            <i class="bi bi-palette2"></i>
+          </a>
+        </div>
+
+        <span class="product-tag" *ngIf="p.tag">{{ p.tag }}</span>
+      </div>
+
+      <div class="product-info">
+        <span class="product-category">{{ p.category }}</span>
+        <h3 class="product-name">{{ p.name }}</h3>
+        <div class="product-footer">
+          <span class="product-price">${{ p.price | number }}</span>
+          <a [routerLink]="['/productos/view', p.id]" class="product-link">
+            View <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>

@@ -1,81 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+// register.component.ts
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
+
+  showPassword = false;
+  isLoading    = false;
+
   userData = {
-    fullName: '',
-    email: '',
-    phone: '',
-    password: '',
+    fullName:        '',
+    email:           '',
+    phone:           '',
+    password:        '',
     confirmPassword: '',
-    acceptTerms: false,
-    newsletter: false
+    acceptTerms:     false,
+    newsletter:      false,
   };
 
-  particles: any[] = [];
-
   constructor(private router: Router) {}
-
-  ngOnInit() {
-    this.generateParticles();
-  }
-
-  generateParticles() {
-    this.particles = Array.from({ length: 15 }, (_, i) => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      delay: Math.random() * 5,
-      color: this.getRandomColor()
-    }));
-  }
-
-  getRandomColor(): string {
-    const colors = ['#FFA6AB', '#FF7F0F', '#A1C3A4', '#D6B6C4'];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
 
   passwordsMatch(): boolean {
     return this.userData.password === this.userData.confirmPassword;
   }
 
-  onSubmit() {
-    if (!this.passwordsMatch()) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
+  onSubmit(): void {
+    if (!this.passwordsMatch() || !this.userData.acceptTerms) return;
 
-    if (!this.userData.acceptTerms) {
-      alert('Debes aceptar los términos y condiciones');
-      return;
-    }
+    this.isLoading = true;
 
-    console.log('Datos de registro:', this.userData);
-
-    // Aquí iría tu lógica de registro
-    // Por ejemplo: this.authService.register(this.userData).subscribe(...)
-
-    // Simulamos registro exitoso
-    alert('¡Cuenta creada exitosamente! Redirigiendo al login...');
-    this.router.navigate(['/auth/login']);
-  }
-
-  goToLogin() {
-    this.router.navigate(['/auth/login']);
-  }
-
-  // Validación en tiempo real para mejor UX
-  onPasswordChange() {
-    if (this.userData.confirmPassword && !this.passwordsMatch()) {
-      // Puedes agregar lógica adicional aquí
-    }
+    // TODO: replace with real auth service call
+    setTimeout(() => {
+      this.isLoading = false;
+      console.log('Register:', this.userData.email);
+      this.router.navigate(['/auth/login']);
+    }, 1200);
   }
 }

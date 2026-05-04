@@ -1,97 +1,109 @@
-<app-header></app-header>
+<!-- categorias.component.html -->
+<div class="sp-categorias-page">
 
-<section class="categories-section" [class.visible]="categories.length > 0">
-  <div class="background-elements">
-    <div class="floating-circle circle-1"></div>
-    <div class="floating-circle circle-2"></div>
-    <div class="floating-circle circle-3"></div>
-  </div>
-
-  <h2 class="section-title">
-    Descubre Nuestras <span>Colecciones</span>
-  </h2>
-  <p class="section-subtitle">Desliza para explorar nuestras categorías premium</p>
-
-  <div class="carousel-container">
-    <button class="nav prev" (click)="prevSlide()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M15 18L9 12L15 6"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </button>
-
-    <div class="carousel">
-      <div
-        *ngFor="let category of categories; let i = index"
-        class="card"
-        [class.active]="i === activeIndex"
-        [class.left]="i === activeIndex - 1"
-        [class.right]="i === activeIndex + 1"
-        [style.transform]="getCardTransform(i)"
-        (click)="selectCard(i)"
-      >
-        <div class="card-glow"></div>
-        <div class="card-content">
-          <div class="image-container">
-            <img
-              [src]="category.image"
-              [alt]="category.name"
-              class="category-image"
-            />
-            <div class="image-overlay"></div>
-            <div class="icon-wrap">
-              <i [class]="category.icon"></i>
-            </div>
-          </div>
-
-          <div class="text-content">
-            <h3 class="category-name">{{ category.name }}</h3>
-            <p class="category-description">{{ category.description }}</p>
-            <div class="category-stats">
-              <span class="stat">+50 productos</span>
-              <span class="stat">⭐ 4.8</span>
-            </div>
-
-            <!-- 🔥 Botón añadido para ir a la lista de productos -->
-            <button
-              class="btn-view-products"
-              (click)="verProductosPorCategoria(category.name); $event.stopPropagation()"
-            >
-              Ver productos
-            </button>
-          </div>
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="cat-hero">
+    <div class="cat-hero-bg">
+      <div class="cat-hero-dots"></div>
+      <div class="cat-hero-blob cat-hero-blob--1"></div>
+      <div class="cat-hero-blob cat-hero-blob--2"></div>
+    </div>
+    <div class="cat-hero-inner">
+      <span class="hero-eyebrow">All Collections</span>
+      <h1 class="hero-title">
+        Everything you can<br>
+        <em>make your own</em>
+      </h1>
+      <p class="hero-sub">
+        From gaming setups to cozy homes — browse every category
+        and find the perfect canvas for your ideas.
+      </p>
+      <!-- Stat pills -->
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <strong>6</strong>
+          <span>Categories</span>
+        </div>
+        <div class="stat-pill">
+          <strong>50+</strong>
+          <span>Products</span>
+        </div>
+        <div class="stat-pill">
+          <strong>100%</strong>
+          <span>Customizable</span>
         </div>
       </div>
     </div>
+  </section>
 
-    <button class="nav next" (click)="nextSlide()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M9 18L15 12L9 6"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </button>
-  </div>
+  <!-- ═══════════════════════════════════════
+       GRID DE CATEGORÍAS
+  ═══════════════════════════════════════ -->
+  <section class="cat-grid-section">
 
-  <div class="carousel-indicators">
-    <div
-      *ngFor="let category of categories; let i = index"
-      class="indicator"
-      [class.active]="i === activeIndex"
-      (click)="goToSlide(i)"
-    >
-      <span class="indicator-text">{{ category.name }}</span>
+    <div class="cat-grid">
+      <div
+        class="cat-card"
+        *ngFor="let c of categories; let i = index"
+        [style.animation-delay]="i * 0.08 + 's'"
+        [class.cat-card--active]="activeCategory === c.id"
+        (mouseenter)="activeCategory = c.id"
+        (mouseleave)="activeCategory = null">
+
+        <!-- Imagen -->
+        <div class="cat-card-img">
+          <img [src]="c.imageUrl" [alt]="c.name">
+          <div class="cat-card-overlay"></div>
+          <span class="cat-card-count">{{ c.count }} items</span>
+        </div>
+
+        <!-- Info -->
+        <div class="cat-card-info">
+          <div class="cat-card-header">
+            <div class="cat-card-icon">
+              <i class="bi" [ngClass]="c.icon"></i>
+            </div>
+            <div>
+              <h3 class="cat-card-name">{{ c.name }}</h3>
+              <span class="cat-card-tag">{{ c.tag }}</span>
+            </div>
+          </div>
+          <p class="cat-card-desc">{{ c.description }}</p>
+          <a
+            class="cat-card-cta"
+            routerLink="/productos"
+            [queryParams]="{categoria: c.id}">
+            Browse {{ c.name }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
     </div>
-  </div>
-</section>
 
-<app-footer></app-footer>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       BANNER CTA INFERIOR
+  ═══════════════════════════════════════ -->
+  <section class="cat-bottom-cta">
+    <div class="cat-bottom-cta-inner">
+      <div class="cat-bottom-icon">
+        <i class="bi bi-palette2"></i>
+      </div>
+      <div class="cat-bottom-text">
+        <h2>Don't see what you're looking for?</h2>
+        <p>Use our custom designer to create exactly what you have in mind.</p>
+      </div>
+      <a routerLink="/product/custom" class="cat-bottom-btn">
+        <i class="bi bi-stars"></i>
+        Start Designing
+      </a>
+    </div>
+  </section>
+
+</div>

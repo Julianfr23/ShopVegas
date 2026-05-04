@@ -1,0 +1,10 @@
+/* home.component.css */
+
+/* El home es solo un orquestador.
+   Cada sección maneja su propio padding/background.
+   Aquí solo garantizamos que no haya gaps entre secciones. */
+
+:host {
+  display: block;
+  overflow-x: hidden;
+}

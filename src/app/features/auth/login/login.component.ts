@@ -1,27 +1,35 @@
+// login.component.ts
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  particles: any;
+  email        = '';
+  password     = '';
+  rememberMe   = false;
+  showPassword = false;
+  isLoading    = false;
 
   constructor(private router: Router) {}
 
-  onSubmit() {
-    console.log('Login attempt:', this.email, this.password);
-  }
+  onSubmit(): void {
+    if (!this.email || !this.password) return;
 
-  goToRegister() {
-    this.router.navigate(['/auth/register']);
+    this.isLoading = true;
+
+    // TODO: replace with real auth service call
+    setTimeout(() => {
+      this.isLoading = false;
+      console.log('Login attempt:', this.email);
+      this.router.navigate(['/home']);
+    }, 1200);
   }
 }

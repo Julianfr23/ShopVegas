@@ -1,0 +1,546 @@
+<!-- cart.component.html -->
+<div class="sp-cart-page">
+
+  <!-- ══════════════════════════════════════
+       VISTA 1 — CARRITO
+  ══════════════════════════════════════ -->
+  <div class="cart-view" *ngIf="!showCheckout && !showOrderConfirmation">
+
+    <!-- Header -->
+    <div class="cart-topbar">
+      <div class="cart-topbar-inner">
+        <div>
+          <h1 class="cart-title">
+            <i class="bi bi-bag"></i> Your Cart
+          </h1>
+          <span class="cart-subtitle" *ngIf="cartItems.length > 0">
+            {{ totalItems }} item{{ totalItems !== 1 ? 's' : '' }} · {{ cartItems.length }} product{{ cartItems.length !== 1 ? 's' : '' }}
+          </span>
+        </div>
+        <button class="clear-cart-btn" *ngIf="cartItems.length > 0" (click)="clearCart()">
+          <i class="bi bi-trash"></i> Clear cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="cart-body" *ngIf="cartItems.length > 0">
+
+      <!-- Items -->
+      <div class="cart-items">
+        <div
+          class="cart-item"
+          *ngFor="let item of cartItems; let i = index"
+          [class.highlighted]="i === highlightedItem"
+          [class.is-custom]="item.customDesign">
+
+          <div class="ci-img">
+            <img [src]="item.image" [alt]="item.name">
+            <span class="ci-custom-badge" *ngIf="item.customDesign">
+              <i class="bi bi-palette2"></i>
+            </span>
+          </div>
+
+          <div class="ci-info">
+            <span class="ci-category">{{ item.category }}</span>
+            <h3 class="ci-name">{{ item.name }}</h3>
+            <p class="ci-variant" *ngIf="item.variant">
+              <i class="bi bi-tag"></i> {{ item.variant }}
+            </p>
+
+            <!-- Custom design details -->
+            <div class="ci-custom-info" *ngIf="item.customDesign">
+              <div class="ci-custom-row">
+                <span>Product:</span>
+                <strong>{{ item.customDesign?.productType }}</strong>
+              </div>
+              <div class="ci-custom-row">
+                <span>Size:</span>
+                <strong>{{ item.customDesign?.measure }}</strong>
+              </div>
+              <div class="ci-custom-row">
+                <span>Images:</span>
+                <strong>{{ item.customDesign?.totalImages }}</strong>
+              </div>
+              <!-- Thumbnails -->
+              <div class="ci-design-thumbs" *ngIf="item.customDesign?.images?.length ?? 0 > 0">
+                <img
+                  *ngFor="let img of item.customDesign?.images?.slice(0, 3)"
+                  [src]="img" alt="Design">
+                <span *ngIf="(item.customDesign?.images?.length ?? 0) > 3">
+                  +{{ (item.customDesign?.images?.length ?? 0) - 3 }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ci-controls">
+            <!-- Quantity -->
+            <div class="ci-qty">
+              <button
+                class="ci-qty-btn"
+                (click)="updateQuantity(item.id, item.quantity - 1)"
+                [disabled]="item.quantity <= 1">
+                <i class="bi bi-dash"></i>
+              </button>
+              <span>{{ item.quantity }}</span>
+              <button
+                class="ci-qty-btn"
+                (click)="updateQuantity(item.id, item.quantity + 1)">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+
+            <div class="ci-price-wrap">
+              <span class="ci-total">${{ item.price * item.quantity | number }}</span>
+              <span class="ci-unit">${{ item.price }} each</span>
+            </div>
+
+            <button class="ci-remove" (click)="removeItem(item.id)" title="Remove item">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Summary sidebar -->
+      <div class="cart-summary">
+        <div class="summary-card">
+          <h3 class="summary-title">Order Summary</h3>
+
+          <div class="summary-rows">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>${{ total | number:'1.2-2' }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span class="free-ship" *ngIf="total > 100">Free!</span>
+              <span *ngIf="total <= 100">$10.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (19%)</span>
+              <span>${{ total * 0.19 | number:'1.2-2' }}</span>
+            </div>
+            <div class="summary-total">
+              <span>Total</span>
+              <strong>${{ (total * 1.19 + (total > 100 ? 0 : 10)) | number:'1.2-2' }}</strong>
+            </div>
+          </div>
+
+          <div class="free-ship-banner" *ngIf="total <= 100">
+            <i class="bi bi-truck"></i>
+            Add ${{ (100 - total) | number:'1.2-2' }} more for free shipping
+          </div>
+
+          <button class="checkout-btn" (click)="startCheckout()">
+            <i class="bi bi-lock-fill"></i>
+            Checkout · ${{ (total * 1.19 + (total > 100 ? 0 : 10)) | number:'1.2-2' }}
+          </button>
+
+          <a routerLink="/productos" class="continue-link">
+            <i class="bi bi-arrow-left"></i> Continue shopping
+          </a>
+
+          <div class="security-row">
+            <i class="bi bi-shield-check"></i>
+            <span>Secure checkout — SSL encrypted</span>
+          </div>
+        </div>
+
+        <!-- Custom note -->
+        <div class="custom-note" *ngIf="hasCustomProducts()">
+          <i class="bi bi-palette2"></i>
+          <div>
+            <strong>{{ getCustomProducts().length }} custom item{{ getCustomProducts().length !== 1 ? 's' : '' }}</strong>
+            <span>We'll contact you to confirm your design before production.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty state -->
+    <div class="cart-empty" *ngIf="cartItems.length === 0">
+      <div class="empty-icon">
+        <i class="bi bi-bag"></i>
+      </div>
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven't added anything yet.</p>
+      <div class="empty-actions">
+        <a routerLink="/productos" class="empty-btn-primary">
+          <i class="bi bi-grid"></i> Browse Products
+        </a>
+        <a routerLink="/product/custom" class="empty-btn-ghost">
+          <i class="bi bi-palette2"></i> Create Custom
+        </a>
+      </div>
+      <div class="empty-perks">
+        <div class="perk">
+          <i class="bi bi-truck"></i>
+          <span>Free shipping over $100</span>
+        </div>
+        <div class="perk">
+          <i class="bi bi-shield-check"></i>
+          <span>Secure payment</span>
+        </div>
+        <div class="perk">
+          <i class="bi bi-palette2"></i>
+          <span>Full customization</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════
+       VISTA 2 — CHECKOUT
+  ══════════════════════════════════════ -->
+  <div class="checkout-view" *ngIf="showCheckout">
+
+    <!-- Progress bar -->
+    <div class="checkout-progress">
+      <div class="cp-inner">
+        <div class="cp-step done">
+          <div class="cp-dot"><i class="bi bi-check"></i></div>
+          <span>Cart</span>
+        </div>
+        <div class="cp-line done"></div>
+        <div class="cp-step active">
+          <div class="cp-dot">2</div>
+          <span>Details</span>
+        </div>
+        <div class="cp-line"></div>
+        <div class="cp-step">
+          <div class="cp-dot">3</div>
+          <span>Payment</span>
+        </div>
+        <div class="cp-line"></div>
+        <div class="cp-step">
+          <div class="cp-dot">4</div>
+          <span>Confirm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-body">
+
+      <!-- Form -->
+      <div class="checkout-form-wrap">
+        <button class="back-btn" (click)="backToCart()">
+          <i class="bi bi-arrow-left"></i> Back to cart
+        </button>
+
+        <form class="checkout-form" (ngSubmit)="processPayment()" #checkoutForm="ngForm">
+
+          <!-- Contact -->
+          <div class="cf-section">
+            <h2 class="cf-section-title">
+              <span class="cf-num">1</span> Contact Information
+            </h2>
+            <div class="cf-grid">
+              <div class="cf-field cf-full">
+                <label>Full name *</label>
+                <div class="cf-input-wrap">
+                  <i class="bi bi-person"></i>
+                  <input type="text" name="name" [(ngModel)]="customerInfo.name"
+                         required placeholder="John Doe">
+                </div>
+              </div>
+              <div class="cf-field">
+                <label>Email *</label>
+                <div class="cf-input-wrap">
+                  <i class="bi bi-envelope"></i>
+                  <input type="email" name="email" [(ngModel)]="customerInfo.email"
+                         required placeholder="you@example.com">
+                </div>
+              </div>
+              <div class="cf-field">
+                <label>Phone *</label>
+                <div class="cf-input-wrap">
+                  <i class="bi bi-telephone"></i>
+                  <input type="tel" name="phone" [(ngModel)]="customerInfo.phone"
+                         required placeholder="+1 (555) 000-0000">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shipping -->
+          <div class="cf-section">
+            <h2 class="cf-section-title">
+              <span class="cf-num">2</span> Shipping Address
+            </h2>
+            <div class="cf-grid">
+              <div class="cf-field cf-full">
+                <label>Street address *</label>
+                <div class="cf-input-wrap">
+                  <i class="bi bi-geo-alt"></i>
+                  <input type="text" name="address" [(ngModel)]="customerInfo.address"
+                         required placeholder="123 Main St, Apt 4B">
+                </div>
+              </div>
+              <div class="cf-field">
+                <label>City *</label>
+                <div class="cf-input-wrap">
+                  <i class="bi bi-building"></i>
+                  <input type="text" name="city" [(ngModel)]="customerInfo.city"
+                         required placeholder="New York">
+                </div>
+              </div>
+              <div class="cf-field">
+                <label>Notes <span class="opt">(optional)</span></label>
+                <div class="cf-input-wrap">
+                  <i class="bi bi-chat-text"></i>
+                  <input type="text" name="notes" [(ngModel)]="customerInfo.notes"
+                         placeholder="Delivery instructions...">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment -->
+          <div class="cf-section">
+            <h2 class="cf-section-title">
+              <span class="cf-num">3</span> Payment Method
+            </h2>
+            <div class="payment-options">
+              <div class="pay-opt pay-opt--active">
+                <div class="pay-opt-icon">
+                  <i class="bi bi-credit-card"></i>
+                </div>
+                <div>
+                  <strong>Credit / Debit Card</strong>
+                  <span>SSL encrypted — secure payment</span>
+                </div>
+                <i class="bi bi-check-circle-fill pay-check"></i>
+              </div>
+              <div class="pay-opt">
+                <div class="pay-opt-icon">
+                  <i class="bi bi-bank"></i>
+                </div>
+                <div>
+                  <strong>Bank Transfer</strong>
+                  <span>Direct to our account</span>
+                </div>
+              </div>
+              <div class="pay-opt">
+                <div class="pay-opt-icon">
+                  <i class="bi bi-cash-coin"></i>
+                </div>
+                <div>
+                  <strong>Cash on Delivery</strong>
+                  <span>Available in select cities</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card mock fields -->
+            <div class="card-fields">
+              <div class="cf-field cf-full">
+                <label>Card number</label>
+                <div class="cf-input-wrap">
+                  <i class="bi bi-credit-card"></i>
+                  <input type="text" value="4242 4242 4242 4242" disabled>
+                </div>
+              </div>
+              <div class="cf-grid">
+                <div class="cf-field">
+                  <label>Name on card</label>
+                  <div class="cf-input-wrap">
+                    <i class="bi bi-person"></i>
+                    <input type="text" value="JOHN DOE" disabled>
+                  </div>
+                </div>
+                <div class="cf-field">
+                  <label>CVV</label>
+                  <div class="cf-input-wrap">
+                    <i class="bi bi-lock"></i>
+                    <input type="text" value="•••" disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cf-submit">
+            <p class="cf-security">
+              <i class="bi bi-whatsapp"></i>
+              Your order will be sent via WhatsApp to coordinate payment.
+            </p>
+            <button type="submit" class="pay-btn" [disabled]="checkoutForm.invalid || isProcessingPayment">
+              <i class="bi" [ngClass]="isProcessingPayment ? 'bi-hourglass-split' : 'bi-whatsapp'"></i>
+              {{ isProcessingPayment ? 'Sending order...' : 'Send Order via WhatsApp 📲' }}
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Order summary sidebar -->
+      <div class="checkout-summary">
+        <div class="co-summary-card">
+          <h3>Order Summary</h3>
+          <div class="co-items">
+            <div class="co-item" *ngFor="let item of cartItems">
+              <div class="co-item-img">
+                <img [src]="item.image" [alt]="item.name">
+                <span class="co-qty">{{ item.quantity }}</span>
+              </div>
+              <div class="co-item-info">
+                <strong>{{ item.name }}</strong>
+                <span *ngIf="item.variant">{{ item.variant }}</span>
+                <span *ngIf="item.customDesign" class="co-custom-tag">
+                  <i class="bi bi-palette2"></i> Custom
+                </span>
+              </div>
+              <span class="co-item-price">${{ item.price * item.quantity | number }}</span>
+            </div>
+          </div>
+          <div class="co-totals">
+            <div class="co-row">
+              <span>Subtotal</span>
+              <span>${{ total | number:'1.2-2' }}</span>
+            </div>
+            <div class="co-row">
+              <span>Shipping</span>
+              <span *ngIf="total > 100" class="free-ship">Free</span>
+              <span *ngIf="total <= 100">$10.00</span>
+            </div>
+            <div class="co-row">
+              <span>Tax (19%)</span>
+              <span>${{ total * 0.19 | number:'1.2-2' }}</span>
+            </div>
+            <div class="co-total">
+              <span>Total</span>
+              <strong>${{ (total * 1.19 + (total > 100 ? 0 : 10)) | number:'1.2-2' }}</strong>
+            </div>
+          </div>
+          <div class="co-delivery">
+            <i class="bi bi-truck"></i>
+            <span>Estimated delivery: {{ getEstimatedDelivery() }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       VISTA 3 — CONFIRMACIÓN
+  ══════════════════════════════════════ -->
+  <div class="confirm-view" *ngIf="showOrderConfirmation && currentOrder">
+
+    <div class="confirm-inner">
+      <!-- Hero success -->
+      <div class="confirm-hero">
+        <div class="confirm-icon">
+          <i class="bi bi-check-lg"></i>
+        </div>
+        <h1>Order Confirmed!</h1>
+        <p>Thank you for your purchase. Your order has been received.</p>
+        <div class="confirm-order-id">
+          Order <strong>{{ currentOrder.id }}</strong>
+        </div>
+      </div>
+
+      <!-- Cards grid -->
+      <div class="confirm-grid">
+
+        <!-- Items -->
+        <div class="confirm-card">
+          <h3 class="confirm-card-title">
+            <i class="bi bi-bag-check"></i> Items Ordered
+          </h3>
+          <div class="confirm-items">
+            <div class="confirm-item" *ngFor="let item of currentOrder.items">
+              <img [src]="item.image" [alt]="item.name">
+              <div class="confirm-item-info">
+                <strong>{{ item.name }}</strong>
+                <span *ngIf="item.variant">{{ item.variant }}</span>
+                <span *ngIf="item.customDesign" class="co-custom-tag">
+                  <i class="bi bi-palette2"></i>
+                  {{ item.customDesign?.productType }} · {{ item.customDesign?.measure }} · {{ item.customDesign?.totalImages }} image{{ (item.customDesign?.totalImages ?? 0) !== 1 ? 's' : '' }}
+                </span>
+                <span>Qty: {{ item.quantity }}</span>
+              </div>
+              <span class="confirm-item-price">${{ item.price * item.quantity | number }}</span>
+            </div>
+          </div>
+          <div class="confirm-total">
+            <span>Total paid</span>
+            <strong>${{ (currentOrder.total * 1.19 + (currentOrder.total > 100 ? 0 : 10)) | number:'1.2-2' }}</strong>
+          </div>
+        </div>
+
+        <!-- Shipping info -->
+        <div class="confirm-card">
+          <h3 class="confirm-card-title">
+            <i class="bi bi-geo-alt"></i> Shipping To
+          </h3>
+          <div class="confirm-info-list">
+            <div class="cil-row">
+              <span>Name</span>
+              <strong>{{ currentOrder.customerInfo?.name }}</strong>
+            </div>
+            <div class="cil-row">
+              <span>Email</span>
+              <strong>{{ currentOrder.customerInfo?.email }}</strong>
+            </div>
+            <div class="cil-row">
+              <span>Phone</span>
+              <strong>{{ currentOrder.customerInfo?.phone }}</strong>
+            </div>
+            <div class="cil-row">
+              <span>Address</span>
+              <strong>{{ currentOrder.customerInfo?.address }}, {{ currentOrder.customerInfo?.city }}</strong>
+            </div>
+            <div class="cil-row" *ngIf="currentOrder.customerInfo?.notes">
+              <span>Notes</span>
+              <strong>{{ currentOrder.customerInfo?.notes }}</strong>
+            </div>
+          </div>
+
+          <div class="confirm-delivery">
+            <i class="bi bi-truck"></i>
+            <div>
+              <strong>Estimated delivery</strong>
+              <span>{{ getOrderEstimatedDelivery(currentOrder.items) }}</span>
+            </div>
+          </div>
+
+          <div class="confirm-custom-notice" *ngIf="hasCustomProducts()">
+            <i class="bi bi-telephone-fill"></i>
+            <div>
+              <strong>We'll reach out soon!</strong>
+              <span>We'll contact you within 24 hours to confirm your custom design details.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="confirm-actions">
+        <button class="confirm-btn-secondary" (click)="generateReceipt(currentOrder)">
+          <i class="bi bi-download"></i> Download Receipt
+        </button>
+        <button class="confirm-btn-primary" (click)="finishOrder()">
+          <i class="bi bi-grid"></i> Continue Shopping
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Payment processing overlay -->
+  <div class="pay-overlay" *ngIf="isProcessingPayment">
+    <div class="pay-modal">
+      <div class="pay-spinner"></div>
+      <h3>Processing payment...</h3>
+      <p>Please don't close this window</p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,40 @@
+/* auth.component.css */
+
+.sp-auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg,
+    #3d2b7a  0%,
+    #6b4fa8  30%,
+    #c46a35  70%,
+    #EA7838 100%
+  );
+}
+
+/* Patrón de puntos */
+.sp-auth-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Blob decorativo */
+.sp-auth-wrapper::after {
+  content: '';
+  position: absolute;
+  top: -120px; left: -120px;
+  width: 500px; height: 500px;
+  background: rgba(246,197,47,0.12);
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}

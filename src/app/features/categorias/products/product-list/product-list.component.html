@@ -1,39 +1,253 @@
-<section class="products-section">
-  <h2 class="section-title">Productos <span>Destacados</span></h2>
+<!-- product-list.component.html -->
+<app-header></app-header>
+<div class="sp-product-list">
 
-  <!-- Barra de búsqueda -->
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="🔍 Buscar producto..."
-      [(ngModel)]="searchTerm"
-      (input)="onSearch()"
-    />
+  <!-- ══════════════════════════════════
+       HEADER BAR
+  ══════════════════════════════════ -->
+  <div class="pl-topbar">
+    <div class="pl-topbar-inner">
+      <div class="pl-topbar-left">
+        <h1 class="pl-title">All Products</h1>
+        <span class="pl-count">{{ filteredProducts.length }} results</span>
+      </div>
+
+      <!-- Search -->
+      <div class="pl-search">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          placeholder="Search products..."
+          [(ngModel)]="searchTerm"
+          (input)="applyFilters()">
+        <button *ngIf="searchTerm" class="search-clear" (click)="clearSearch()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+
+      <!-- View toggle + Sort -->
+      <div class="pl-controls">
+        <select class="pl-sort" [(ngModel)]="sortBy" (change)="applyFilters()">
+          <option value="default">Sort by: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name-asc">Name: A–Z</option>
+        </select>
+
+        <div class="view-toggle">
+          <button
+            class="view-btn"
+            [class.active]="viewMode === 'grid'"
+            (click)="viewMode = 'grid'"
+            title="Grid view">
+            <i class="bi bi-grid"></i>
+          </button>
+          <button
+            class="view-btn"
+            [class.active]="viewMode === 'list'"
+            (click)="viewMode = 'list'"
+            title="List view">
+            <i class="bi bi-list-ul"></i>
+          </button>
+        </div>
+
+        <!-- Mobile filter toggle -->
+        <button class="filter-toggle-btn" (click)="sidebarOpen = !sidebarOpen">
+          <i class="bi bi-sliders"></i>
+          Filters
+          <span class="filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="product-grid">
-    <div *ngFor="let product of filteredProducts" class="product-card">
-      <div class="image-wrap">
-        <img [src]="product.image" [alt]="product.name" />
+  <!-- ══════════════════════════════════
+       BODY: SIDEBAR + GRID
+  ══════════════════════════════════ -->
+  <div class="pl-body">
+
+    <!-- SIDEBAR -->
+    <aside class="pl-sidebar" [class.open]="sidebarOpen">
+      <div class="sidebar-header">
+        <span>Filters</span>
+        <button class="sidebar-close" (click)="sidebarOpen = false">
+          <i class="bi bi-x-lg"></i>
+        </button>
       </div>
-      <div class="product-info">
-        <h3>{{ product.name }}</h3>
-        <p class="price">${{ product.price | number }}</p>
-        <div class="buttons">
-          <a [routerLink]="['/productos/view', product.id]" class="btn-view">Ver Detalles</a>
-          <a
-            href="https://wa.me/573001234567?text=Hola%20quiero%20comprar%20{{ product.name }}"
-            target="_blank"
-            class="btn-buy"
-            >Personalizar</a
-          >
+
+      <!-- Active filters chips -->
+      <div class="active-filters" *ngIf="activeFilterCount > 0">
+        <button class="clear-all" (click)="clearAllFilters()">
+          Clear all <i class="bi bi-x"></i>
+        </button>
+      </div>
+
+      <!-- Filtros por tipo de producto -->
+      <div class="sidebar-section">
+
+        <!-- ALL -->
+        <label class="sidebar-option sidebar-option--all">
+          <input type="radio" name="category" value=""
+                 [(ngModel)]="selectedCategory" (change)="applyFilters()">
+          <span class="option-check"></span>
+          <span class="option-label">All Products</span>
+          <span class="option-count">{{ getCategoryCount('') }}</span>
+        </label>
+
+        <!-- GAMING GROUP -->
+        <div class="sidebar-group">
+          <span class="sidebar-group-label">
+            <i class="bi bi-controller"></i> Gaming
+          </span>
+          <div class="sidebar-options">
+            <label class="sidebar-option"
+                   *ngFor="let type of gamingTypes">
+              <input type="radio" name="category" [value]="type"
+                     [(ngModel)]="selectedCategory" (change)="applyFilters()">
+              <span class="option-check"></span>
+              <span class="option-label">{{ type | titlecase }}</span>
+              <span class="option-count">{{ getCategoryCount(type) }}</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- HOME GROUP -->
+        <div class="sidebar-group">
+          <span class="sidebar-group-label">
+            <i class="bi bi-house-heart"></i> Home
+          </span>
+          <div class="sidebar-options">
+            <label class="sidebar-option"
+                   *ngFor="let type of homeTypes">
+              <input type="radio" name="category" [value]="type"
+                     [(ngModel)]="selectedCategory" (change)="applyFilters()">
+              <span class="option-check"></span>
+              <span class="option-label">{{ type | titlecase }}</span>
+              <span class="option-count">{{ getCategoryCount(type) }}</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Price range -->
+      <div class="sidebar-section">
+        <h4 class="sidebar-label">Price Range</h4>
+        <div class="price-range">
+          <div class="price-inputs">
+            <div class="price-input-wrap">
+              <span>$</span>
+              <input
+                type="number"
+                [(ngModel)]="minPrice"
+                (change)="applyFilters()"
+                placeholder="Min"
+                min="0">
+            </div>
+            <span class="price-sep">—</span>
+            <div class="price-input-wrap">
+              <span>$</span>
+              <input
+                type="number"
+                [(ngModel)]="maxPrice"
+                (change)="applyFilters()"
+                placeholder="Max"
+                min="0">
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- CTA personalizar -->
+      <div class="sidebar-cta">
+        <i class="bi bi-palette2"></i>
+        <p>Can't find what you need?</p>
+        <a routerLink="/product/custom" class="sidebar-cta-btn">
+          Design your own
+        </a>
+      </div>
+    </aside>
+
+    <!-- Overlay móvil -->
+    <div
+      class="sidebar-overlay"
+      [class.visible]="sidebarOpen"
+      (click)="sidebarOpen = false">
     </div>
 
-    <!-- Mensaje cuando no hay resultados -->
-    <div *ngIf="filteredProducts.length === 0" class="no-results">
-      <p>No se encontraron productos para "<strong>{{ searchTerm }}</strong>"</p>
+    <!-- PRODUCTS AREA -->
+    <div class="pl-content">
+
+      <!-- No results -->
+      <div class="no-results" *ngIf="filteredProducts.length === 0">
+        <i class="bi bi-search"></i>
+        <h3>No products found</h3>
+        <p>Try adjusting your filters or search term.</p>
+        <button class="btn-clear" (click)="clearAllFilters()">Clear filters</button>
+      </div>
+
+      <!-- GRID VIEW -->
+      <div class="products-grid" *ngIf="viewMode === 'grid' && filteredProducts.length > 0">
+        <div
+          class="product-card"
+          *ngFor="let p of filteredProducts; let i = index"
+          [style.animation-delay]="i * 0.06 + 's'">
+
+          <div class="pc-img-wrap">
+            <img [src]="p.image" [alt]="p.name">
+            <div class="pc-actions">
+              <a [routerLink]="['/productos/view', p.id]" class="pc-btn pc-btn--view" title="View details">
+                <i class="bi bi-eye"></i>
+              </a>
+              <a routerLink="/product/custom" class="pc-btn pc-btn--custom" title="Customize">
+                <i class="bi bi-palette2"></i>
+              </a>
+            </div>
+            <span class="pc-tag">{{ p.category }}</span>
+          </div>
+
+          <div class="pc-info">
+            <h3 class="pc-name">{{ p.name }}</h3>
+            <div class="pc-footer">
+              <span class="pc-price">${{ p.price | number }}</span>
+              <a [routerLink]="['/productos/view', p.id]" class="pc-link">
+                View <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIST VIEW -->
+      <div class="products-list" *ngIf="viewMode === 'list' && filteredProducts.length > 0">
+        <div
+          class="product-row"
+          *ngFor="let p of filteredProducts; let i = index"
+          [style.animation-delay]="i * 0.05 + 's'">
+
+          <div class="pr-img">
+            <img [src]="p.image" [alt]="p.name">
+          </div>
+
+          <div class="pr-info">
+            <span class="pr-category">{{ p.category }}</span>
+            <h3 class="pr-name">{{ p.name }}</h3>
+            <p class="pr-desc" *ngIf="p.description">{{ p.description }}</p>
+          </div>
+
+          <div class="pr-actions">
+            <span class="pr-price">${{ p.price | number }}</span>
+            <a [routerLink]="['/productos/view', p.id]" class="pr-btn pr-btn--view">
+              View Details
+            </a>
+            <a routerLink="/product/custom" class="pr-btn pr-btn--custom">
+              <i class="bi bi-palette2"></i> Customize
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</section>
+
+</div>

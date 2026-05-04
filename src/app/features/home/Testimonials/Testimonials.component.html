@@ -1,0 +1,38 @@
+<!-- testimonials.component.html -->
+<section class="sp-testimonials">
+
+  <div class="section-header">
+    <span class="section-eyebrow">Community</span>
+    <h2 class="section-title">What our <span>customers say</span></h2>
+  </div>
+
+  <div class="testimonials-track">
+    <div class="testimonials-inner"
+         [style.transform]="'translateX(-' + (currentIndex * cardWidth) + 'px)'">
+      <div class="testimonial-card" *ngFor="let t of testimonials">
+        <div class="testimonial-stars">
+          <i class="bi bi-star-fill" *ngFor="let s of [1,2,3,4,5]"></i>
+        </div>
+        <p class="testimonial-text">"{{ t.text }}"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">{{ t.name[0] }}</div>
+          <div class="author-info">
+            <strong>{{ t.name }}</strong>
+            <span>{{ t.product }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonials-dots">
+    <button
+      *ngFor="let t of testimonials; let i = index"
+      class="t-dot"
+      [class.active]="i === currentIndex"
+      (click)="goTo(i)"
+      [attr.aria-label]="'Testimonio ' + (i + 1)">
+    </button>
+  </div>
+
+</section>

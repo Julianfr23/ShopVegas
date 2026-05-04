@@ -3,6 +3,7 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from "../../../../shared/header/header.component";
 
 export interface ProductFeature { title: string; desc: string; }
 
@@ -33,7 +34,7 @@ export interface CartItem {
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css'],
 })

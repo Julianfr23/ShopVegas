@@ -258,44 +258,60 @@ soulprint.com
     const info = order.customerInfo;
     const date = new Date(order.date).toLocaleString('en-US');
 
-    // Línea por producto
-    const itemLines = order.items.map((item, i) => {
-      let line = `  ${i + 1}. ${item.name}`;
-      if (item.variant)      line += ` (${item.variant})`;
-      if (item.customDesign) line += ` [CUSTOM: ${item.customDesign.productType} · ${item.customDesign.measure}]`;
-      line += `\n     Qty: ${item.quantity} × $${item.price.toFixed(2)} = $${(item.price * item.quantity).toFixed(2)}`;
-      return line;
-    }).join('\n');
+    // Línea por producto — incluye ID y URL de imagen para identificar el diseño exacto
+    const baseUrl = this.isBrowserEnv ? window.location.origin : 'https://soulprint.com';
 
-    const shipping = order.total > 100 ? 0 : 10;
-    const tax      = order.total * 0.19;
-    const finalTotal = (order.total + tax + shipping).toFixed(2);
+    const itemLines = order.items.map((item, i) => {
+      const imgPath   = item.image || '';
+      const imgFile   = imgPath.split('/').pop() || '';
+      const designNum = imgFile.replace(/\.[^.]+$/, '');
+
+      let line = `  ${i + 1}) *${item.name}*`;
+      if (item.variant) line += `  |  📐 ${item.variant}`;
+      line += `\n  🖼 Design ref: _${designNum}_`;
+      line += `\n  🔗 ${baseUrl}/productos/view/${item.id}`;
+      if (item.customDesign) {
+        line += `\n  ✏️ Custom: ${item.customDesign.productType} · ${item.customDesign.measure} · ${item.customDesign.totalImages} file(s)`;
+      }
+      line += `\n  🛒 ${item.quantity} units × $${item.price.toFixed(2)} = *$${(item.price * item.quantity).toFixed(2)}*`;
+      return line;
+    }).join('\n\n');
+
+    const shipping    = order.total > 100 ? 0 : 10;
+    const tax         = order.total * 0.19;
+    const finalTotal  = (order.total + tax + shipping).toFixed(2);
 
     const msg =
-`🛍️ *NEW ORDER — SoulPrint*
-━━━━━━━━━━━━━━━━━━━━
-📋 *Order:* ${order.id}
-📅 *Date:* ${date}
+`✨ *NEW ORDER — SoulPrint* ✨
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+🧾 *Order ID:* ${order.id}
+🗓 *Date:* ${date}
 
-👤 *CUSTOMER INFO*
-• Name: ${info?.name}
-• Phone: ${info?.phone}
-• Email: ${info?.email || 'Not provided'}
-• Address: ${info?.address}, ${info?.city}
-${info?.notes ? `• Notes: ${info.notes}` : ''}
-━━━━━━━━━━━━━━━━━━━━
-🛒 *PRODUCTS ORDERED*
+👤 *CUSTOMER DETAILS*
+» Full Name: ${info?.name}
+» Phone: ${info?.phone}
+» Email: ${info?.email || 'Not provided'}
+» Ship to: ${info?.address}, ${info?.city}
+${info?.notes ? `» Notes: ${info.notes}` : ''}
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+🎨 *ITEMS ORDERED*
+
 ${itemLines}
-━━━━━━━━━━━━━━━━━━━━
-💰 *ORDER SUMMARY*
-• Subtotal: $${order.total.toFixed(2)}
-• Tax (19%): $${tax.toFixed(2)}
-• Shipping: $${shipping.toFixed(2)}
-• *TOTAL: $${finalTotal}*
-━━━━━━━━━━━━━━━━━━━━
-📦 Est. delivery: ${order.items.some(i => i.customDesign) ? '5–7 business days' : '2–3 business days'}
 
-Please confirm this order and coordinate payment. Thank you! 🙏`;
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+💵 *PRICE BREAKDOWN*
+» Subtotal ——— $${order.total.toFixed(2)}
+» Tax (19%) ——— $${tax.toFixed(2)}
+» Shipping ——— ${shipping === 0 ? '🎉 FREE' : '$' + shipping.toFixed(2)}
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+💳 *TOTAL TO PAY: $${finalTotal}*
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+🚚 Est. delivery: ${order.items.some(i => i.customDesign) ? '5–7 business days (custom production)' : '2–3 business days'}
+
+👀 *Check each design link before confirming production!*
+
+Thanks for your order! We'll reach out to coordinate payment 🙌
+— SoulPrint Team`;
 
     const phone = '573144242953'; // ← Reemplaza con tu número real
     if (this.isBrowserEnv) {

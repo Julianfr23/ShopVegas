@@ -55,7 +55,6 @@
               ],
               "outputHashing": "all"
             },
-            "outputHashing": "all"
           },
           "development": {
             "optimization": false,

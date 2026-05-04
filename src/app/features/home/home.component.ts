@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HeroSplitComponent } from './hero-split/hero-split.component';
-import { BannerCtaComponent } from './BannerCta/BannerCta.component';
-import { CategoriesComponent } from './Categories/Categories.component';
+import { BannerCtaComponent } from './BannerCta/bannercta.component';
+import { CategoriesComponent } from './Categories/categories.component';
 import { ProductsFeaturedComponent } from './products-featured/products-featured.component';
-import { TestimonialsComponent } from './Testimonials/Testimonials.component';
+import { TestimonialsComponent } from './Testimonials/testimonials.component';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
-import { CarruselComponent } from './Carrusel/Carrusel.component';
+import { CarruselComponent } from './Carrusel/carrusel.component';
 
 @Component({
   selector: 'app-home',

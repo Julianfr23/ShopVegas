@@ -395,3 +395,16 @@
   .hero-stats { gap: 0.75rem; }
   .stat-pill  { padding: 0.45rem 1rem; }
 }
+
+/* From price in category cards */
+.cat-card-from {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--sp-orange);
+  margin: 0.1rem 0 0.5rem;
+}
+
+body[data-theme="gamer"] .sp-categorias-page .cat-card-from {
+  color: var(--sp-purple) !important;
+}

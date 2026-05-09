@@ -18,7 +18,7 @@
         Upload your image, choose the product and we do the magic.
         Sublimation quality, colors that last.
       </p>
-      <a class="bct-btn" routerLink="/product/custom">
+      <a class="bct-btn" routerLink="/custom-order">
         <i class="bi bi-palette2"></i>
         Customize Now
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -32,7 +32,7 @@
 
       <!-- Producto destacado rotativo -->
       <div class="bct-featured">
-        <div class="bct-featured-img-wrap">
+        <div class="bct-featured-img-wrap" style="cursor:pointer" [routerLink]="['/productos/view', products[activeProduct].id]">
           <img
             *ngFor="let p of products; let i = index"
             [src]="p.image"
@@ -43,7 +43,7 @@
         <div class="bct-featured-label">
           <span class="bct-featured-name">{{ products[activeProduct].name }}</span>
           <span class="bct-featured-badge">
-            <i class="bi bi-patch-check-fill"></i> Personalizable
+            <i class="bi bi-patch-check-fill"></i> Customizable
           </span>
         </div>
       </div>

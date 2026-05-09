@@ -3,7 +3,7 @@
 
   <div class="footer-body">
 
-    <!-- COLUMNA MARCA -->
+    <!-- BRAND COLUMN -->
     <div class="footer-brand">
       <a class="footer-logo" routerLink="/">
         <img src="assets/images/Soulprint_isotipo.png" alt="SoulPrint">
@@ -14,61 +14,61 @@
       </a>
 
       <p class="footer-desc">
-        Estampados y objetos personalizados con alma.
-        Donde tus ideas toman forma.
+        Custom printed products with soul.
+        Where your ideas take shape.
       </p>
 
       <div class="footer-social">
-        <a class="social-btn" href="https://instagram.com" target="_blank" aria-label="Instagram">
+        <a class="social-btn" href="https://www.instagram.com/soulprintlv?igsh=dHVxb3o5aGh3b3lo" target="_blank" aria-label="Instagram">
           <i class="bi bi-instagram"></i>
         </a>
-        <a class="social-btn" href="https://facebook.com" target="_blank" aria-label="Facebook">
+        <a class="social-btn" href="https://www.facebook.com/share/1QL2Rk8vW3/?mibextid=wwXIfr" target="_blank" aria-label="Facebook">
           <i class="bi bi-facebook"></i>
         </a>
-        <a class="social-btn" href="https://tiktok.com" target="_blank" aria-label="TikTok">
+        <a class="social-btn" href="https://www.tiktok.com/@soulprintlasvegas?_r=1&_t=zp-94pr5r1wrsz" target="_blank" aria-label="TikTok">
           <i class="bi bi-tiktok"></i>
         </a>
-        <a class="social-btn" href="https://wa.me/573001234567" target="_blank" aria-label="WhatsApp">
+        <a class="social-btn" href="https://wa.me/17027014472" target="_blank" aria-label="WhatsApp">
           <i class="bi bi-whatsapp"></i>
         </a>
       </div>
     </div>
 
-    <!-- COLUMNA COMPAÑÍA -->
+    <!-- COMPANY COLUMN -->
     <div class="footer-col">
-      <h6>Compañía</h6>
+      <h6>Company</h6>
       <ul>
-        <li><a routerLink="/about">Sobre nosotros</a></li>
-        <li><a routerLink="/home" (click)="scrollToSection('como-trabajamos')">Cómo trabajamos</a></li>
-        <li><a routerLink="/categorias">Categorías</a></li>
-        <li><a routerLink="/productos">Productos</a></li>
+        <li><a routerLink="/home">Home</a></li>
+        <li><a routerLink="/categorias">Categories</a></li>
+        <li><a routerLink="/productos">Products</a></li>
+        <li><a routerLink="/custom-order">Custom Order</a></li>
       </ul>
     </div>
 
-    <!-- COLUMNA AYUDA -->
+    <!-- HELP COLUMN -->
     <div class="footer-col">
-      <h6>Ayuda</h6>
+      <h6>Help</h6>
       <ul>
-        <li><a routerLink="/support">Soporte</a></li>
-        <li><a routerLink="/shipping">Envíos</a></li>
-        <li><a routerLink="/returns">Devoluciones</a></li>
-        <li><a routerLink="/terms">Términos</a></li>
+        <li><a href="https://wa.me/17027014472" target="_blank">Support</a></li>
+        <li><a routerLink="/shipping">Shipping</a></li>
+        <li><a routerLink="/returns">Returns</a></li>
+        <li><a routerLink="/terms">Terms</a></li>
       </ul>
     </div>
 
-    <!-- COLUMNA NEWSLETTER -->
+    <!-- NEWSLETTER COLUMN -->
     <div class="footer-newsletter">
-      <h6>Novedades</h6>
-      <p>Recibe inspiración, nuevos diseños y ofertas exclusivas.</p>
+      <h6>Stay in the loop</h6>
+      <p>Get inspiration, new designs and exclusive offers.</p>
       <div class="newsletter-form">
         <input
           class="newsletter-input"
           type="email"
-          placeholder="tu@correo.com"
+          placeholder="you@email.com"
           [(ngModel)]="email"
         >
         <button class="newsletter-btn" (click)="subscribe()">
-          <i class="bi bi-send"></i> Suscribirme
+          <i class="bi bi-send"></i> Subscribe
         </button>
       </div>
     </div>
@@ -79,11 +79,11 @@
   <div class="footer-bottom">
     <div class="footer-bottom-inner">
       <p class="footer-copy">
-        © {{ year }} <strong>SoulPrint</strong>. Todos los derechos reservados.
+        © {{ year }} <strong>SoulPrint</strong>. All rights reserved.
       </p>
       <ul class="footer-legal">
-        <li><a routerLink="/terms">Términos</a></li>
-        <li><a routerLink="/privacy">Privacidad</a></li>
+        <li><a routerLink="/terms">Terms</a></li>
+        <li><a routerLink="/privacy">Privacy</a></li>
         <li><a routerLink="/cookies">Cookies</a></li>
       </ul>
     </div>

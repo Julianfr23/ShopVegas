@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from "../../shared/header/header.component";
 
+
 @Component({
   selector: 'app-categorias',
   standalone: true,
@@ -17,58 +18,54 @@ export class CategoriasComponent {
 
   categories = [
     {
-      id: 'Buzos',
-      name: 'Hoodies & Sweatshirts',
-      tag: 'Apparel',
-      icon: 'bi-stars',
-      count: 12,
-      imageUrl: 'assets/images/buzoo.jpg',
-      description: 'Bold graphics, soft fabric. Design your perfect hoodie with your artwork, photo, or logo — sublimated in full color for lasting vibrancy.'
+      id:          'MOUSE PAD',
+      name:        'Mouse Pads',
+      tag:         'Gaming',
+      icon:        'bi-mouse',
+      count:       12,
+      fromPrice:   18.99,
+      imageUrl:    'assets/images/gamer/mousepad1.PNG',
+      description: 'Smooth polyester surface with a 3mm non-slip rubber base and reinforced stitched edges. Full-color custom print that lasts — perfect for any gaming or office setup.'
     },
     {
-      id: 'Camibusos',
-      name: 'T-Shirts',
-      tag: 'Apparel',
-      icon: 'bi-person',
-      count: 18,
-      imageUrl: 'assets/images/camibuso.jpg',
-      description: 'Lightweight and breathable tees that carry your identity. Perfect for everyday wear, events, or gifting to someone special.'
+      id:          'DESKMAT',
+      name:        'Desk Mats',
+      tag:         'Gaming',
+      icon:        'bi-display',
+      count:       18,
+      fromPrice:   32.00,
+      imageUrl:    'assets/images/gamer/deskmat1.png',
+      description: 'Extended coverage for your entire desk. Precision surface, non-slip base and vibrant edge-to-edge full-color print. Perfect for gaming, editing or everyday creative work.'
     },
     {
-      id: 'Mugs',
-      name: 'Mugs & Tumblers',
-      tag: 'Kitchen',
-      icon: 'bi-cup-hot',
-      count: 8,
-      imageUrl: 'assets/images/mugs.jpg',
-      description: 'Start every morning with a mug that tells your story. Wrap-around prints, photos, or illustrations — dishwasher safe and built to last.'
+      id:          'FLEECE BLANKET',
+      name:        'Fleece Blankets',
+      tag:         'Home',
+      icon:        'bi-house-heart',
+      count:       21,
+      fromPrice:   25.00,
+      imageUrl:    'assets/images/home/blanket1.jpg',
+      description: 'Ultra-soft 100% polyester fleece with full-color edge-to-edge sublimation printing. Lightweight yet cozy — ideal for movie nights, naps, or as a personalized gift.'
     },
     {
-      id: 'Cobijas',
-      name: 'Blankets',
-      tag: 'Home',
-      icon: 'bi-house-heart',
-      count: 6,
-      imageUrl: 'assets/images/cobija.jpg',
-      description: 'Ultra-soft custom blankets printed edge to edge. Ideal for cozy nights, memorable gifts, or showing off your favorite memories.'
+      id:          'SHERPA BLANKET',
+      name:        'Sherpa Blankets',
+      tag:         'Home',
+      icon:        'bi-snow',
+      count:       21,
+      fromPrice:   28.00,
+      imageUrl:    'assets/images/home/blanket22.jpg',
+      description: 'Your custom design on the front, ultra-soft fluffy Sherpa on the back. Next-level warmth and comfort — perfect for your couch, bedroom or as a thoughtful gift.'
     },
     {
-      id: 'Mousepads',
-      name: 'Mouse Pads',
-      tag: 'Gaming / Office',
-      icon: 'bi-controller',
-      count: 10,
-      imageUrl: 'assets/images/mousepad.jpg',
-      description: 'Level up your desk setup with a full-print mouse pad. From gamer artwork to minimal aesthetics — precision surface, maximum style.'
-    },
-    {
-      id: 'Vasos',
-      name: 'Tumblers & Cups',
-      tag: 'Kitchen',
-      icon: 'bi-cup-straw',
-      count: 7,
-      imageUrl: 'assets/images/vaso.jpg',
-      description: 'Custom printed tumblers that keep your drinks hot or cold. Great for hydration on the go and as branded merchandise.'
+      id:          'APRON',
+      name:        'Aprons',
+      tag:         'Home',
+      icon:        'bi-scissors',
+      count:       5,
+      fromPrice:   25.00,
+      imageUrl:    'assets/images/home/apron1.png',
+      description: 'Durable 100% polyester canvas with bold edge-to-edge color. Five strap color options available. Perfect for cooking, baking, grilling or any creative craft.'
     },
   ];
 }

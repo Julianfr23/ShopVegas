@@ -1,0 +1,235 @@
+<!-- custom-order.component.html -->
+<app-header></app-header>
+
+<div class="sp-custom-order">
+
+  <!-- Hero -->
+  <div class="co-hero">
+    <div class="co-hero-bg"></div>
+    <div class="co-hero-inner">
+      <span class="co-eyebrow">Custom Order</span>
+      <h1 class="co-title">Design your <em>perfect product</em></h1>
+      <p class="co-sub">Tell us what you want and we'll make it happen.<br>No account needed — just fill the form and send.</p>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="co-body">
+
+    <div class="co-form-wrap">
+
+      <form class="co-form" (ngSubmit)="sendToWhatsApp()" #orderForm="ngForm">
+
+        <!-- Step 1: Product -->
+        <div class="co-section">
+          <div class="co-section-header">
+            <span class="co-step">1</span>
+            <h2>What product do you want?</h2>
+          </div>
+
+          <div class="co-product-grid">
+            <button
+              type="button"
+              class="co-product-btn"
+              *ngFor="let p of products"
+              [class.active]="form.product === p.id"
+              (click)="selectProduct(p)">
+              <i class="bi" [ngClass]="p.icon"></i>
+              <span>{{ p.label }}</span>
+              <small>from ${{ p.fromPrice }}</small>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Size -->
+        <div class="co-section" *ngIf="form.product">
+          <div class="co-section-header">
+            <span class="co-step">2</span>
+            <h2>Choose a size</h2>
+          </div>
+
+          <div class="co-size-grid">
+            <button
+              type="button"
+              class="co-size-btn"
+              *ngFor="let s of currentSizes"
+              [class.active]="form.size === s.label"
+              (click)="selectSize(s)">
+              <span class="size-label">{{ s.label }}</span>
+              <span class="size-price">${{ s.price }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Quantity -->
+        <div class="co-section" *ngIf="form.size">
+          <div class="co-section-header">
+            <span class="co-step">3</span>
+            <h2>How many units?</h2>
+          </div>
+
+          <div class="co-qty-wrap">
+            <button type="button" class="co-qty-btn" (click)="changeQty(-1)" [disabled]="form.quantity <= 1">
+              <i class="bi bi-dash"></i>
+            </button>
+            <span class="co-qty-val">{{ form.quantity }}</span>
+            <button type="button" class="co-qty-btn" (click)="changeQty(1)" [disabled]="form.quantity >= 99">
+              <i class="bi bi-plus"></i>
+            </button>
+          </div>
+
+          <div class="co-total-preview" *ngIf="form.sizePrice">
+            <span>Estimated starting total</span>
+            <div class="co-from-price">
+              <small>from</small>
+              <strong>${{ (form.sizePrice * form.quantity) | number:'1.2-2' }}</strong>
+            </div>
+          </div>
+
+          <p class="co-price-note">
+            <i class="bi bi-info-circle"></i>
+            Final price may vary based on design complexity.
+            We'll confirm the exact quote after reviewing your request.
+          </p>
+        </div>
+
+        <!-- Step 4: Description -->
+        <div class="co-section" *ngIf="form.size">
+          <div class="co-section-header">
+            <span class="co-step">4</span>
+            <h2>Describe your design</h2>
+          </div>
+
+          <textarea
+            class="co-textarea"
+            name="description"
+            [(ngModel)]="form.description"
+            placeholder="Describe what you want on your product. Example: 'Deadpool eating a burrito on a gray background, landscape orientation.' The more detail, the better!"
+            rows="4"
+            maxlength="500">
+          </textarea>
+          <span class="co-char-count">{{ form.description.length }}/500</span>
+        </div>
+
+        <!-- Step 5: Contact -->
+        <div class="co-section" *ngIf="form.size">
+          <div class="co-section-header">
+            <span class="co-step">5</span>
+            <h2>Your contact info</h2>
+          </div>
+
+          <div class="co-fields">
+            <div class="co-field">
+              <label>Full name *</label>
+              <div class="co-input-wrap">
+                <i class="bi bi-person"></i>
+                <input
+                  type="text"
+                  name="name"
+                  [(ngModel)]="form.name"
+                  required
+                  placeholder="John Doe">
+              </div>
+            </div>
+
+            <div class="co-field">
+              <label>Phone / WhatsApp *</label>
+              <div class="co-input-wrap">
+                <i class="bi bi-telephone"></i>
+                <input
+                  type="tel"
+                  name="phone"
+                  [(ngModel)]="form.phone"
+                  required
+                  placeholder="+1 (555) 000-0000">
+              </div>
+            </div>
+
+            <div class="co-field co-field--full">
+              <label>Email <span class="opt">(optional)</span></label>
+              <div class="co-input-wrap">
+                <i class="bi bi-envelope"></i>
+                <input
+                  type="email"
+                  name="email"
+                  [(ngModel)]="form.email"
+                  placeholder="you@example.com">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="co-submit" *ngIf="form.size && form.name && form.phone">
+          <div class="co-summary">
+            <div class="co-summary-row">
+              <span>Product</span>
+              <strong>{{ form.productLabel }}</strong>
+            </div>
+            <div class="co-summary-row">
+              <span>Size</span>
+              <strong>{{ form.size }}</strong>
+            </div>
+            <div class="co-summary-row">
+              <span>Quantity</span>
+              <strong>{{ form.quantity }} unit{{ form.quantity !== 1 ? 's' : '' }}</strong>
+            </div>
+            <div class="co-summary-total">
+              <span>Est. Total</span>
+              <div class="co-from-price">
+                <small>from</small>
+                <strong>${{ (form.sizePrice * form.quantity) | number:'1.2-2' }}</strong>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="co-send-btn">
+            <i class="bi bi-whatsapp"></i>
+            Send Custom Order via WhatsApp
+          </button>
+
+          <p class="co-disclaimer">
+            We'll review your request and contact you to confirm details and coordinate payment.
+          </p>
+        </div>
+
+      </form>
+
+    </div>
+
+    <!-- Side info -->
+    <div class="co-info-panel">
+      <h3>How it works</h3>
+      <div class="co-steps">
+        <div class="co-how-step">
+          <div class="co-how-num">1</div>
+          <div>
+            <strong>Fill the form</strong>
+            <p>Choose your product, size and describe your design idea.</p>
+          </div>
+        </div>
+        <div class="co-how-step">
+          <div class="co-how-num">2</div>
+          <div>
+            <strong>Send via WhatsApp</strong>
+            <p>We receive your request instantly and review your design.</p>
+          </div>
+        </div>
+        <div class="co-how-step">
+          <div class="co-how-num">3</div>
+          <div>
+            <strong>We confirm & produce</strong>
+            <p>Once approved, we start production and ship directly to you.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="co-note">
+        <i class="bi bi-info-circle"></i>
+        <p>Have an image file? Send it to us directly on WhatsApp after submitting your order.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>

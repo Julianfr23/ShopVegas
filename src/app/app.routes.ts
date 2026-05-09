@@ -29,6 +29,11 @@ export const routes: Routes = [
         .then(m => m.ProductCustomComponent)
   },
   {
+    path: 'custom-order',
+    loadComponent: () => import('./features/custom-order/custom-order.component')
+      .then(m => m.CustomOrderComponent)
+  },
+  {
     path: 'buy',
     loadComponent: () =>
       import('./features/buy/cart/cart.component')

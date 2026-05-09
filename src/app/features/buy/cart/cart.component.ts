@@ -260,63 +260,63 @@ soulprint.com
     const date = new Date(order.date).toLocaleString('en-US');
 
     // Línea por producto — incluye ID y URL de imagen para identificar el diseño exacto
-    const baseUrl = this.isBrowserEnv ? window.location.origin : 'https://soulprint.com';
+    const baseUrl = 'https://soulprintlv.com';
 
     const itemLines = order.items.map((item, i) => {
       const imgPath   = item.image || '';
       const imgFile   = imgPath.split('/').pop() || '';
       const designNum = imgFile.replace(/\.[^.]+$/, '');
 
-      let line = `  ${i + 1}) *${item.name}*`;
-      if (item.variant) line += `  |  📐 ${item.variant}`;
-      line += `\n  🖼 Design ref: _${designNum}_`;
-      line += `\n  🔗 ${baseUrl}/productos/view/${item.id}`;
+      let line = (i + 1) + ') ' + item.name;
+      if (item.variant) line += ' | Size: ' + item.variant;
+      line += '\n   Design: ' + designNum;
+      line += '\n   Link:   ' + baseUrl + '/productos/view/' + item.id;
       if (item.customDesign) {
-        line += `\n  ✏️ Custom: ${item.customDesign.productType} · ${item.customDesign.measure} · ${item.customDesign.totalImages} file(s)`;
+        line += '\n   Custom: ' + item.customDesign.productType + ' / ' + item.customDesign.measure + ' / ' + item.customDesign.totalImages + ' file(s)';
       }
-      line += `\n  🛒 ${item.quantity} units × $${item.price.toFixed(2)} = *$${(item.price * item.quantity).toFixed(2)}*`;
+      line += '\n   Qty:    ' + item.quantity + ' x $' + item.price.toFixed(2) + ' = $' + (item.price * item.quantity).toFixed(2);
       return line;
-    }).join('\n\n');
+    }).join('\n');
 
     const shipping    = order.total > 100 ? 0 : 10;
     const tax         = order.total * 0.19;
     const finalTotal  = (order.total + tax + shipping).toFixed(2);
 
-    const msg =
-`✨ *NEW ORDER — SoulPrint* ✨
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-🧾 *Order ID:* ${order.id}
-🗓 *Date:* ${date}
+        const DIV = '\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC\u25AC';
+    const dateStr = new Date(order.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-👤 *CUSTOMER DETAILS*
-» Full Name: ${info?.name}
-» Phone: ${info?.phone}
-» Email: ${info?.email || 'Not provided'}
-» Ship to: ${info?.address}, ${info?.city}
-${info?.notes ? `» Notes: ${info.notes}` : ''}
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-🎨 *ITEMS ORDERED*
-
-${itemLines}
-
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-💵 *PRICE BREAKDOWN*
-» Subtotal ——— $${order.total.toFixed(2)}
-» Tax (19%) ——— $${tax.toFixed(2)}
-» Shipping ——— ${shipping === 0 ? '🎉 FREE' : '$' + shipping.toFixed(2)}
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-💳 *TOTAL TO PAY: $${finalTotal}*
-▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-🚚 Est. delivery: ${order.items.some(i => i.customDesign) ? '5–7 business days (custom production)' : '2–3 business days'}
-
-👀 *Check each design link before confirming production!*
-
-Thanks for your order! We'll reach out to coordinate payment 🙌
-— SoulPrint Team`;
+    const msg = [
+      '\u2728 NEW ORDER \u2014 SoulPrint \u2728',
+      DIV,
+      '\u{1F4E6} Order ID: ' + order.id,
+      '\u{1F4C5} Date: ' + dateStr,
+      '\u{1F464} CUSTOMER DETAILS',
+      '\u00BB Name: '             + info?.name,
+      '\u00BB Phone: '            + info?.phone,
+      '\u00BB Email: '            + (info?.email || 'Not provided'),
+      '\u00BB Shipping Address: ' + info?.address + ', ' + info?.city,
+      info?.notes ? '\u00BB Notes: ' + info.notes : '',
+      DIV,
+      '\u{1F6CD} ORDER SUMMARY',
+      itemLines,
+      DIV,
+      '\u{1F4B3} PRICE DETAILS',
+      '\u00BB Subtotal: $'  + order.total.toFixed(2),
+      '\u00BB Tax (19%): $' + tax.toFixed(2),
+      '\u00BB Shipping: '   + (shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)),
+      DIV,
+      '\u{1F4B0} TOTAL: $' + finalTotal,
+      DIV,
+      '\u{1F69A} Estimated delivery: ' + (order.items.some(i => i.customDesign) ? '5-7 business days (custom production)' : '2-3 business days'),
+      '\u26A0 Please review each design carefully before production confirmation.',
+      '\u2728 Thank you for choosing SoulPrint.',
+      "We'll contact you shortly to coordinate payment and finalize your order.",
+      '\u2014 SoulPrint Team \u{1F49C}',
+    ].filter(Boolean).join('\n');
 
     const phone = '573144242953'; // ← Reemplaza con tu número real
     if (this.isBrowserEnv) {
-      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open('https://api.whatsapp.com/send?phone=' + phone + '&text=' + encodeURIComponent(msg), '_blank');
     }
   }
 

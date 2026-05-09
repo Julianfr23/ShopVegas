@@ -1,70 +1,52 @@
-<!-- header.component.html -->
-<header class="sp-header" [class.scrolled]="isScrolled">
-  <div class="container">
+<header class="sp-header sticky-top border-bottom">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container align-items-center">
 
-    <!-- LOGO -->
-    <a class="sp-logo" routerLink="/">
-      <img src="assets/images/Soulprint_isotipo.png" alt="SoulPrint isotipo">
-      <div class="sp-logo-text">
-        <span class="wordmark"><span>Soul</span>Print</span>
-        <span class="tagline">Custom Sublimation</span>
+      <!-- Logo -->
+      <a class="navbar-brand d-flex align-items-center gap-2 me-3" routerLink="/">
+        <img src="assets/images/logo.png" alt="Soulprint" class="brand-mark">
+        <span class="fw-bold sp-text-dark">Soulprint</span>
+      </a>
+
+      <!-- Menú móvil -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+
+      <div class="collapse navbar-collapse w-100" id="mainNav">
+        <!-- Links -->
+        <ul class="navbar-nav me-3 mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link sp-link" routerLink="/home">Home</a></li>
+          <li class="nav-item"><a class="nav-link sp-link" routerLink="/categorias">Categories</a></li>
+          <li class="nav-item"><a class="nav-link sp-link" routerLink="/productos">Products</a></li>
+          <li class="nav-item">
+            <a class="nav-link sp-link sp-link--custom" routerLink="/custom-order">
+              <i class="bi bi-palette2 me-1"></i> Custom Order
+            </a>
+          </li>
+        </ul>
+
+        <!-- Búsqueda -->
+        <form class="d-none d-lg-flex mx-lg-auto my-3 my-lg-0 flex-grow-1" style="max-width: 540px;">
+          <input class="form-control rounded-pill me-2" type="search" placeholder="Search products...">
+          <button class="btn sp-btn-outline rounded-pill" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+
+        <!-- Acciones -->
+        <div class="ms-lg-auto d-flex align-items-center gap-2">
+          <a class="btn sp-btn-outline rounded-pill" routerLink="/auth/login">
+            <i class="bi bi-person-circle me-2"></i> Sign in
+          </a>
+          <a class="btn sp-btn rounded-pill" routerLink="/auth/register">
+            <i class="bi bi-person-plus me-2"></i> Sign up
+          </a>
+          <a class="btn sp-btn-light rounded-circle p-2 ms-1" routerLink="/buy">
+            <i class="bi bi-basket sp-bag-icon"></i>
+          </a>
+        </div>
       </div>
-    </a>
-
-    <!-- NAV (desktop) -->
-    <ul class="sp-nav">
-      <li><a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a></li>
-      <li><a class="nav-link" routerLink="/categorias" routerLinkActive="active">Categories</a></li>
-      <li><a class="nav-link" routerLink="/productos" routerLinkActive="active">Products</a></li>
-
-    </ul>
-
-    <!-- BUSCADOR (desktop) -->
-    <div class="sp-search">
-      <i class="bi bi-search search-icon"></i>
-      <input type="text" placeholder="Buscar productos..." [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
     </div>
-
-    <!-- ACCIONES (desktop) -->
-    <div class="sp-actions">
-      <a class="sp-btn-outline" routerLink="/auth/login">
-        <i class="bi bi-person"></i> Login
-      </a>
-      <a class="sp-btn-primary" routerLink="/auth/register">
-        <i class="bi bi-person-plus"></i> Register
-      </a>
-      <a class="sp-cart-btn" routerLink="/buy">
-        <i class="bi bi-basket2"></i>
-        <span class="sp-cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
-      </a>
-    </div>
-
-    <!-- TOGGLE móvil -->
-    <button class="sp-toggle" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen">
-      <i class="bi" [class.bi-list]="!menuOpen" [class.bi-x-lg]="menuOpen"></i>
-    </button>
-
-  </div>
-
-  <!-- MENÚ MÓVIL -->
-  <div class="sp-mobile-menu" [class.open]="menuOpen">
-    <a class="nav-link" routerLink="/home"       (click)="closeMenu()">Inicio</a>
-    <a class="nav-link" routerLink="/categorias" (click)="closeMenu()">Categorías</a>
-    <a class="nav-link" routerLink="/productos"  (click)="closeMenu()">Productos</a>
-    <a class="nav-link" (click)="scrollToSection('como-trabajamos'); closeMenu()">Cómo Trabajamos</a>
-
-    <div class="sp-search">
-      <i class="bi bi-search search-icon"></i>
-      <input type="text" placeholder="Search Products..." [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
-    </div>
-
-    <div class="sp-actions-mobile">
-      <a class="sp-btn-outline" routerLink="/auth/login"    (click)="closeMenu()">
-        <i class="bi bi-person"></i> Login
-      </a>
-      <a class="sp-btn-primary" routerLink="/auth/register" (click)="closeMenu()">
-        <i class="bi bi-person-plus"></i> Register
-      </a>
-    </div>
-  </div>
+  </nav>
 </header>
